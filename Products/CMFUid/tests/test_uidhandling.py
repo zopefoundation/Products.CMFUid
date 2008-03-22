@@ -36,6 +36,15 @@ class DummyUid:
     pass
 
 
+class DummyContent(DummyContent):
+    """Objects may return non-ASCII when converted to str.
+    
+    Think File and Image.
+    """
+    def __str__(self):
+        return u'M\xe4dchen'
+
+
 class UniqueIdHandlerTests(SecurityTest):
 
     def _getTargetClass(self):

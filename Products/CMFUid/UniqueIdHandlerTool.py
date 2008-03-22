@@ -109,7 +109,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         UID_ATTRIBUTE_NAME = self.UID_ATTRIBUTE_NAME
         if getattr(aq_base(obj), UID_ATTRIBUTE_NAME, None) is None:
             raise UniqueIdError, \
-                  "No unique id available to be unregistered on '%s'" % obj
+                  "No unique id available to be unregistered on %r" % obj
 
         # delete the uid and reindex
         delattr(obj, UID_ATTRIBUTE_NAME)
@@ -135,7 +135,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         """
         uid = self.queryUid(obj, None)
         if uid is None:
-            raise UniqueIdError, "No unique id available on '%s'" % obj
+            raise UniqueIdError, "No unique id available on %r" % obj
         return uid
 
     security.declarePrivate('setUid')
