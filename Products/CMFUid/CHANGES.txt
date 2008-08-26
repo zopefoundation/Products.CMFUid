@@ -10,7 +10,7 @@ Products.CMFUid Changelog
   (http://www.zope.org/Collectors/CMF/472)
 
 
-2.1.2 (2008-08-26)
+2.1.2-beta (2008-08-26)
 ------------------
 
 - completed devolution from monolithic CMF package into its component
