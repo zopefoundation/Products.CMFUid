@@ -1,8 +1,10 @@
 Products.CMFUid Changelog
 =========================
 
-2.1.2 (unreleased)
+2.1.2 (2008-09-13)
 ------------------
+
+- no changes from 2.1.2-beta
 
 
 2.1.2-beta (2008-08-26)
