@@ -97,4 +97,3 @@ The behaviour is hooked in based on object creating/deletion/move events
 for any IContentish objects.  The event handlers live in the 
 UniqueIdAnnotation tool.
 
-
