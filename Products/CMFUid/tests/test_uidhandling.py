@@ -276,6 +276,18 @@ class UniqueIdHandlerTests(SecurityTest):
         brains = catalog(cmf_uid=uid)
         self.assertEqual(len(brains), 1)
 
+    def test_UidCatalogingDoesNotCatalogPortalRoot(self):
+        handler = self.root.portal_uidhandler
+        catalog = self.root.portal_catalog
+        dummy = self.root.dummy
+        
+        # mock the portal root, which has empty indexing attributes
+        dummy.reindexObject = lambda: None
+        
+        uid = handler.register(dummy)
+        brains = catalog(cmf_uid=uid)
+        self.assertEqual(len(brains), 0)
+
 
 def test_suite():
     return unittest.TestSuite((

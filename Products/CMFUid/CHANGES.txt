@@ -4,6 +4,11 @@ Products.CMFUid Changelog
 2.2.0 (unreleased)
 ------------------
 
+- UniqueIdHandlerTool: Call the reindexObject attribute of the object
+  getting a uid, rather than portal_catalog's reindexObject.  This is
+  needed to properly handle objects like the portal itself which shouldn't
+  get catalogued ever.
+
 - Removed redundant and unexpected code to auto-create catalog index and
   column for the UID handler tool. The index and column are already
   created by the default CMFUid GenericSetup profile.

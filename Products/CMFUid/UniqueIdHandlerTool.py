@@ -87,7 +87,10 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         annotation.setUid(uid)
 
         # reindex the object
-        self._reindexObject(obj)
+        try:
+            obj.reindexObject()
+        except AttributeError:
+            self._reindexObject(obj)
 
     security.declarePublic('register')
     def register(self, obj):
