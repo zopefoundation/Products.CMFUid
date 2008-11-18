@@ -4,6 +4,8 @@ Products.CMFUid Changelog
 2.1.3-beta (unreleased)
 -----------------------
 
+- Add missing utility registration for IUniqueIdHandler.  See
+  https://bugs.launchpad.net/bugs/299058 .
 
 2.1.2 (2008-09-13)
 ------------------
