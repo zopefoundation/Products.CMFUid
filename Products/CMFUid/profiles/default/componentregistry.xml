@@ -8,5 +8,8 @@
   <utility
      interface="Products.CMFUid.interfaces.IUniqueIdAnnotationManagement"
      object="portal_uidannotation"/>
+  <utility
+     interface="Products.CMFUid.interfaces.IUniqueIdHandler"
+     object="portal_uidhandler"/>
  </utilities>
 </componentregistry>

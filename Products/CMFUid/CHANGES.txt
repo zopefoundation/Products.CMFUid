@@ -4,6 +4,9 @@ Products.CMFUid Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Add missing utility registration for IUniqueIdHandler.  See
+  https://bugs.launchpad.net/bugs/299058 .
+
 - UniqueIdHandlerTool: Call the reindexObject attribute of the object
   getting a uid, rather than portal_catalog's reindexObject.  This is
   needed to properly handle objects like the portal itself which shouldn't
@@ -13,7 +16,6 @@ Products.CMFUid Changelog
   column for the UID handler tool. The index and column are already
   created by the default CMFUid GenericSetup profile.
   (http://www.zope.org/Collectors/CMF/472)
-
 
 2.1.2-beta (2008-08-26)
 ------------------
