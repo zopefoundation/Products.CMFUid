@@ -4,6 +4,14 @@ Products.CMFUid Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Cleaned up / normalized imports:
+
+  o Don't import from Globals;  instead, use real locations.
+
+  o Make other imports use the actual source module, rather than an
+    intermediate (e.g., prefer importing 'ClassSecurityInfo' from
+    'AccessControl.SecurityInfo' rather than from 'AccessControl').
+
 - Add missing utility registration for IUniqueIdHandler.  See
   https://bugs.launchpad.net/bugs/299058 .
 

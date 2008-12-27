@@ -21,10 +21,10 @@ import logging
 import os
 import Missing
 
-from AccessControl import ClassSecurityInfo
+from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import aq_base
-from Globals import InitializeClass
-from Globals import package_home
+from App.class_init import default__class_init__ as InitializeClass
+from App.Common import package_home
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import getUtility

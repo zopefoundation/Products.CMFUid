@@ -17,13 +17,13 @@ Provides support for managing unique id annotations.
 $Id$
 """
 
-from AccessControl import ClassSecurityInfo
+from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
-from Globals import InitializeClass
-from Globals import Persistent
+from App.class_init import default__class_init__ as InitializeClass
 from OFS.interfaces import IObjectClonedEvent
 from OFS.PropertyManager import PropertyManager
 from OFS.SimpleItem import SimpleItem
+from Persistence import Persistent
 from zope.app.container.interfaces import IObjectAddedEvent
 from zope.component import queryUtility
 from zope.interface import implements

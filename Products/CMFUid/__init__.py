@@ -15,20 +15,20 @@
 $Id$
 """
 
-from Products.CMFCore import utils
-
-import UniqueIdAnnotationTool
-import UniqueIdGeneratorTool
-import UniqueIdHandlerTool
-
-
-tools = (
-    UniqueIdAnnotationTool.UniqueIdAnnotationTool,
-    UniqueIdGeneratorTool.UniqueIdGeneratorTool,
-    UniqueIdHandlerTool.UniqueIdHandlerTool,
-)
-
 def initialize(context):
+
+    from Products.CMFCore import utils
+
+    import UniqueIdAnnotationTool
+    import UniqueIdGeneratorTool
+    import UniqueIdHandlerTool
+
+
+    tools = (
+        UniqueIdAnnotationTool.UniqueIdAnnotationTool,
+        UniqueIdGeneratorTool.UniqueIdGeneratorTool,
+        UniqueIdHandlerTool.UniqueIdHandlerTool,
+    )
 
     utils.ToolInit( 'CMF Unique Id Tool'
                   , tools=tools

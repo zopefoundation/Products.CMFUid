@@ -17,9 +17,9 @@ Provides support for generating unique ids.
 $Id$
 """
 
-from AccessControl import ClassSecurityInfo
+from AccessControl.SecurityInfo import ClassSecurityInfo
+from App.class_init import default__class_init__ as InitializeClass
 from BTrees.Length import Length
-from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
 from zope.interface import implements
 
