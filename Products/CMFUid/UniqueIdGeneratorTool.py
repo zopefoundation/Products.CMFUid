@@ -18,14 +18,13 @@ $Id$
 """
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
-from App.class_init import default__class_init__ as InitializeClass
+from App.class_init import InitializeClass
 from BTrees.Length import Length
 from OFS.SimpleItem import SimpleItem
 from zope.interface import implements
 
 from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.utils import UniqueObject
-
 from Products.CMFUid.interfaces import IUniqueIdGenerator
 
 
