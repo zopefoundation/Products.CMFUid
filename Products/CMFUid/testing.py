@@ -1,8 +1,10 @@
-from zope.app.component.hooks import setHooks
+from Testing.ZopeTestCase.layer import ZopeLite
+from zope.site.hooks import setHooks
 from zope.testing.cleanup import cleanUp
 from Products.Five import zcml
 
-class UidEventZCMLLayer:
+
+class UidEventZCMLLayer(ZopeLite):
 
     @classmethod
     def testSetUp(cls):
@@ -16,13 +18,3 @@ class UidEventZCMLLayer:
     @classmethod
     def testTearDown(cls):
         cleanUp()
-
-
-# Derive from ZopeLite layer if available
-try:
-    from Testing.ZopeTestCase.layer import ZopeLite
-except ImportError:
-    pass # Zope < 2.11
-else:
-    UidEventZCMLLayer.__bases__ = (ZopeLite,)
-

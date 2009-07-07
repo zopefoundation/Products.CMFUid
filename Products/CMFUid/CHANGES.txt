@@ -4,6 +4,8 @@ Products.CMFUid Changelog
 2.2.0 (unreleased)
 ------------------
 
+- moved the Zope dependency to version 2.12.0b3dev
+
 - Cleaned up / normalized imports:
 
   o Don't import from Globals;  instead, use real locations.
