@@ -1,8 +1,8 @@
 Products.CMFUid Changelog
 =========================
 
-2.2.0 (unreleased)
-------------------
+2.2.0-alpha (2009-11-13)
+------------------------
 
 - moved the Zope dependency to version 2.12.0b3dev
 
@@ -27,8 +27,15 @@ Products.CMFUid Changelog
   created by the default CMFUid GenericSetup profile.
   (http://www.zope.org/Collectors/CMF/472)
 
-2.1.2-beta (2008-08-26)
+
+2.1.2 (2008-09-13)
 ------------------
+
+- no changes from 2.1.2-beta
+
+
+2.1.2-beta (2008-08-26)
+-----------------------
 
 - completed devolution from monolithic CMF package into its component
   products that are distributed as eggs from PyPI.
