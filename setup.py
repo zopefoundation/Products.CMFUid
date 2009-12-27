@@ -46,7 +46,7 @@ setup(name='Products.%s' % NAME,
                      ],
       install_requires=[
           'setuptools',
-          'Zope2 >= 2.12.0b3dev',
+          'Zope2 >= 2.12.0',
           'Products.CMFCore',
           'Products.GenericSetup',
           ],
@@ -58,7 +58,7 @@ setup(name='Products.%s' % NAME,
       entry_points="""
       [zope2.initialize]
       Products.%s = Products.%s:initialize
-      [distutils.command]
+      [distutils.commands]
       ftest = zope.testing.testrunner.eggsupport:ftest
       """ % (NAME, NAME),
       )
