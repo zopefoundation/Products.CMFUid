@@ -9,7 +9,7 @@
 >
  <input type="text" name="uid:int" value=""
         tal:attributes="value uid" />
- <input type="submit" name="manage_queryObject:method" value=" Query UID ">
+ <input type="submit" name="manage_queryObject:method" value=" Query UID "/>
 </form>
 
 <div tal:condition="uid"
