@@ -4,7 +4,10 @@ Products.CMFUid Changelog
 2.2.1-beta (unreleased)
 -----------------------
 
+- Deal with deprecation warnings for Zope 2.13.
+
 - Fix markup error (Chameleon compatibility)
+
 
 2.2.0 (2010-01-04)
 ------------------

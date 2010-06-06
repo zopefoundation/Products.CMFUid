@@ -1,7 +1,12 @@
 from Testing.ZopeTestCase.layer import ZopeLite
 from zope.site.hooks import setHooks
 from zope.testing.cleanup import cleanUp
-from Products.Five import zcml
+
+# BBB for Zope 2.12
+try:
+    from Zope2.App import zcml
+except ImportError:
+    from Products.Five import zcml
 
 
 class UidEventZCMLLayer(ZopeLite):
