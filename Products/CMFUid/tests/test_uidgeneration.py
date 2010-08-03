@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """Test the unique id generation.
-
-$Id$
 """
 
 import unittest
@@ -72,6 +70,3 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(UniqueIdGeneratorToolTests),
         ))
-
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')

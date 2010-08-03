@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """Test the unique id handling.
-
-$Id$
 """
 
 import unittest
@@ -293,6 +291,3 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(UniqueIdHandlerTests),
         ))
-
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')
