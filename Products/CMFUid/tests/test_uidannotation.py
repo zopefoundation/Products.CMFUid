@@ -258,6 +258,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         self.failIf( annotation() == new_annotation() )
 
     def test_simulateNestedFolderCloneRemovingUid1(self):
+        self._initPolicyAndUser() # allow copy/paste operations
         self.root.site._setObject( 'foo', Folder(id='foo') )
         self.root.site._setObject( 'foo2', Folder(id='foo2') )
         foo = self.root.site.foo
