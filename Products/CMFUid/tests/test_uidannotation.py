@@ -51,18 +51,16 @@ class DummyUniqueIdHandlerTool(Implicit):
         self.counter = 0
 
     def register(self, ob):
-
         uid_assigner = getUtility(IUniqueIdAnnotationManagement)
         annotation = uid_assigner(ob, UID_ATTRNAME)
         annotation.setUid( self.counter )
         self.counter += 1
 
     def unregister(self, ob):
-
         try:
-           delattr(ob, UID_ATTRNAME)
+            delattr(ob, UID_ATTRNAME)
         except AttributeError:
-           raise UniqueIdError
+            raise UniqueIdError
 
 
 class UniqueIdAnnotationToolTests(SecurityTest):
@@ -153,7 +151,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         annotation = getattr(dummy, UID_ATTRNAME, None)
 
         self.failUnless(annotation is not None)
-    
+
     def test_simulateItemAddRemovingUid(self):
         # an annotated object is set in place
         dummy = DummyContent(id='dummycontent')
