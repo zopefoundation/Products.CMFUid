@@ -1,12 +1,22 @@
+##############################################################################
+#
+# Copyright (c) 2007 Zope Foundation and Contributors.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+""" Unit test layers.
+"""
+
 from Testing.ZopeTestCase.layer import ZopeLite
 from zope.site.hooks import setHooks
 from zope.testing.cleanup import cleanUp
-
-# BBB for Zope 2.12
-try:
-    from Zope2.App import zcml
-except ImportError:
-    from Products.Five import zcml
+from Zope2.App import zcml
 
 
 class UidEventZCMLLayer(ZopeLite):

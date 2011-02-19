@@ -4,6 +4,8 @@ Products.CMFUid Changelog
 2.3.0-alpha (unreleased)
 ------------------------
 
+- Require at least Zope 2.13.4.
+
 - Deal with deprecation warnings for Zope 2.13.
 
 - Fix markup error (Chameleon compatibility)
