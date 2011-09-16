@@ -20,12 +20,12 @@ from zope.component import getSiteManager
 from zope.interface.verify import verifyClass
 from zope.testing.cleanup import cleanUp
 
+from Products.CMFCore.interfaces import ICatalogTool
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummyFolder
 from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import IUniqueIdGenerator
-from Products.CMFUid.interfaces import IUniqueIdHandler
 
 
 class DummyUid:
@@ -56,24 +56,22 @@ class UniqueIdHandlerTests(SecurityTest):
                 import UniqueIdAnnotationTool
         from Products.CMFUid.UniqueIdGeneratorTool \
                 import UniqueIdGeneratorTool
-        SecurityTest.setUp(self)
-        self.root._setObject('portal_catalog', CatalogTool())
-        self.root._setObject('portal_uidgenerator', UniqueIdGeneratorTool())
-        self.root._setObject('portal_uidannotation', UniqueIdAnnotationTool())
-        self.root._setObject('portal_uidhandler', self._getTargetClass()())
-        self.root._setObject('dummy', DummyContent(id='dummy'))
-        self.root._setObject('dummy2', DummyContent(id='dummy2'))
 
+        SecurityTest.setUp(self)
+        self.app._setObject('portal_uidhandler', self._getTargetClass()())
+        self.app._setObject('dummy', DummyContent(id='dummy'))
+        self.app._setObject('dummy2', DummyContent(id='dummy2'))
         sm = getSiteManager()
-        sm.registerUtility( self.root.portal_uidannotation
-                          , IUniqueIdAnnotationManagement
-                          )
-        sm.registerUtility(self.root.portal_uidgenerator, IUniqueIdGenerator)
+        self.ctool = CatalogTool().__of__(self.app)
+        sm.registerUtility(self.ctool, ICatalogTool)
+        sm.registerUtility(UniqueIdAnnotationTool(),
+                           IUniqueIdAnnotationManagement)
+        sm.registerUtility(UniqueIdGeneratorTool(), IUniqueIdGenerator)
 
         # Make sure we have our indices/columns
-        uid_name = self.root.portal_uidhandler.UID_ATTRIBUTE_NAME
-        self.root.portal_catalog.addIndex(uid_name, 'FieldIndex')
-        self.root.portal_catalog.addColumn(uid_name)
+        uid_name = self.app.portal_uidhandler.UID_ATTRIBUTE_NAME
+        self.ctool.addIndex(uid_name, 'FieldIndex')
+        self.ctool.addColumn(uid_name)
 
     def tearDown(self):
         cleanUp()
@@ -220,7 +218,7 @@ class UniqueIdHandlerTests(SecurityTest):
 
         # calling a getter returns one object and generates a log
         # we can't capture. So let's ask the catalog directly.
-        catalog = self.root.portal_catalog
+        catalog = self.ctool
         result = catalog({handler.UID_ATTRIBUTE_NAME: uid1_reg})
         self.assertEqual(len(result), 2)
 
@@ -250,7 +248,7 @@ class UniqueIdHandlerTests(SecurityTest):
 
     def test_UidCataloging(self):
         handler = self.root.portal_uidhandler
-        catalog = self.root.portal_catalog
+        catalog = self.ctool
         dummy = self.root.dummy
 
         uid = handler.register(dummy)
@@ -259,7 +257,7 @@ class UniqueIdHandlerTests(SecurityTest):
 
     def test_UidCatalogingDoesNotAcquireUid(self):
         handler = self.root.portal_uidhandler
-        catalog = self.root.portal_catalog
+        catalog = self.ctool
         self.root._setObject('folder', DummyFolder('folder'))
         folder = self.root.folder
 
@@ -276,7 +274,7 @@ class UniqueIdHandlerTests(SecurityTest):
 
     def test_UidCatalogingDoesNotCatalogPortalRoot(self):
         handler = self.root.portal_uidhandler
-        catalog = self.root.portal_catalog
+        catalog = self.ctool
         dummy = self.root.dummy
         
         # mock the portal root, which has empty indexing attributes

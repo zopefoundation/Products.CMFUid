@@ -13,8 +13,6 @@
 """Unique Id Handler Tool
 
 Provides support for accessing unique ids on content object.
-
-$Id$
 """
 
 import logging
@@ -30,8 +28,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import getUtility
 from zope.interface import implements
 
+from Products.CMFCore.interfaces import ICatalogTool
 from Products.CMFCore.permissions import ManagePortal
-from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import IUniqueIdBrainQuery
@@ -72,10 +70,8 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
     security = ClassSecurityInfo()
 
     def _reindexObject(self, obj):
-        # XXX: this method violates the rules for tools/utilities:
-        # it depends on a non-utility tool
-        catalog = getToolByName(self, 'portal_catalog')
-        catalog.reindexObject(obj, idxs=[self.UID_ATTRIBUTE_NAME])
+        ctool = getUtility(ICatalogTool)
+        ctool.reindexObject(obj, idxs=[self.UID_ATTRIBUTE_NAME])
 
     def _setUid(self, obj, uid):
         """Attaches a unique id to the object and does reindexing.
@@ -164,8 +160,6 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         """This helper method does the "hard work" of querying the catalog
            and interpreting the results.
         """
-        # XXX: this method violates the rules for tools/utilities:
-        # it depends on a non-utility tool
         if uid is None:
             return default
 
@@ -173,8 +167,8 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         generator = getUtility(IUniqueIdGenerator)
         uid = generator.convert(uid)
 
-        catalog = getToolByName(self, 'portal_catalog')
-        searchMethod = getattr(catalog, searchMethodName)
+        ctool = getUtility(ICatalogTool)
+        searchMethod = getattr(ctool, searchMethodName)
         result = searchMethod({self.UID_ATTRIBUTE_NAME: uid})
         len_result = len(result)
 
