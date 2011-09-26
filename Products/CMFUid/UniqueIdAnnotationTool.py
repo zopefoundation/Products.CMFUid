@@ -13,8 +13,6 @@
 """Unique Id Annotation Tool
 
 Provides support for managing unique id annotations.
-
-$Id$
 """
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
@@ -28,11 +26,11 @@ from zope.component import queryUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.interface import implements
 
-from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFUid.interfaces import IUniqueIdAnnotation
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
+from Products.CMFUid.interfaces import IUniqueIdHandler
 from Products.CMFUid.interfaces import UniqueIdError
 
 
@@ -75,38 +73,38 @@ def handleUidAnnotationEvent(ob, event):
     if IObjectAddedEvent.providedBy(event):
         if event.newParent is not None:
             anno_tool = queryUtility(IUniqueIdAnnotationManagement)
-            uid_handler = getToolByName(ob, 'portal_uidhandler', None)
+            uidtool = queryUtility(IUniqueIdHandler)
             if anno_tool is not None:
-                remove_on_add = anno_tool.getProperty('remove_on_add',False)
-                remove_on_clone = anno_tool.getProperty('remove_on_clone',False)
-                assign_on_add = anno_tool.getProperty('assign_on_add',False)
+                remove_on_add = anno_tool.getProperty('remove_on_add', False)
+                remove_on_clone = anno_tool.getProperty('remove_on_clone', False)
+                assign_on_add = anno_tool.getProperty('assign_on_add', False)
 
                 if (remove_on_add and remove_on_clone) or assign_on_add:
                     try:
-                        uid_handler.unregister(ob)
+                        uidtool.unregister(ob)
                     except UniqueIdError:
                         # did not have one
                         pass
                 if assign_on_add:
                     # assign new uid
-                    uid_handler.register(ob)
-                 
+                    uidtool.register(ob)
+
     elif IObjectClonedEvent.providedBy(event):
         anno_tool = queryUtility(IUniqueIdAnnotationManagement)
-        uid_handler = getToolByName(ob, 'portal_uidhandler', None)
+        uidtool = queryUtility(IUniqueIdHandler)
 
         if anno_tool is not None:
             remove_on_clone = anno_tool.getProperty('remove_on_clone', False)
             assign_on_clone = anno_tool.getProperty('assign_on_clone', False)
             if remove_on_clone or assign_on_clone:
                 try:
-                    uid_handler.unregister(ob)
+                    uidtool.unregister(ob)
                 except UniqueIdError:
                     # did not have one
                     pass
             if assign_on_clone:
                 # assign new uid
-                uid_handler.register(ob)
+                uidtool.register(ob)
 
 
 class UniqueIdAnnotationTool(UniqueObject, SimpleItem, PropertyManager):

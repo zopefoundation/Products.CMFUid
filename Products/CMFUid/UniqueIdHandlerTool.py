@@ -30,6 +30,7 @@ from zope.interface import implements
 
 from Products.CMFCore.interfaces import ICatalogTool
 from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import IUniqueIdBrainQuery
@@ -40,7 +41,7 @@ from Products.CMFUid.interfaces import UniqueIdError
 
 UID_ATTRIBUTE_NAME = 'cmf_uid'
 
-_wwwdir = os.path.join( package_home( globals() ), 'www' )
+_wwwdir = os.path.join(package_home(globals()), 'www')
 
 
 class UniqueIdHandlerTool(UniqueObject, SimpleItem):
@@ -52,7 +53,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
 
     id = 'portal_uidhandler'
 
-    manage_options = ( ({'label': 'Query',
+    manage_options = (({'label': 'Query',
                          'action': 'manage_queryObject'},)
                      + SimpleItem.manage_options
                      )
@@ -248,3 +249,4 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
     manage_queryObject = PageTemplateFile('queryUID.pt', _wwwdir)
 
 InitializeClass(UniqueIdHandlerTool)
+registerToolInterface('portal_uidhandler', IUniqueIdHandler)

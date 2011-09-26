@@ -30,9 +30,8 @@ class UniqueIdGeneratorToolTests(SecurityTest):
 
         return UniqueIdGeneratorTool
 
-    def setUp(self):
-        SecurityTest.setUp(self)
-        self.root._setObject('portal_uidgenerator', self._getTargetClass()())
+    def _makeOne(self, *args, **kw):
+        return self._getTargetClass()(*args, **kw)
 
     def test_interfaces(self):
         from Products.CMFUid.interfaces import IUniqueIdGenerator
@@ -40,14 +39,14 @@ class UniqueIdGeneratorToolTests(SecurityTest):
         verifyClass(IUniqueIdGenerator, self._getTargetClass())
 
     def test_returnedUidsAreValidAndDifferent(self):
-        generator = self.root.portal_uidgenerator
+        generator = self._makeOne()
         uid1 = generator()
         uid2 = generator()
         self.failIfEqual(uid1, uid2)
         self.failIfEqual(uid1, None)
 
     def test_converter(self):
-        generator = self.root.portal_uidgenerator
+        generator = self._makeOne()
         uid = generator()
         str_uid = str(uid)
         result = generator.convert(str_uid)
@@ -57,7 +56,7 @@ class UniqueIdGeneratorToolTests(SecurityTest):
         # For backwards compatibility with CMF 1.5.0 and 1.5.1, check if
         # the generator correctly replaces a ``BTree.Length.Length`` object
         # to an integer.
-        generator = self.root.portal_uidgenerator
+        generator = self._makeOne()
         uid1 = generator()
         generator._uid_counter = Length(uid1)
         self.failUnless(isinstance(generator._uid_counter, Length))

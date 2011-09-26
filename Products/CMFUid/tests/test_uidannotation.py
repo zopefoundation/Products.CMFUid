@@ -17,6 +17,7 @@ import unittest
 import Testing
 
 import transaction
+from AccessControl import SecurityManager
 from AccessControl.SecurityManagement import newSecurityManager
 from Acquisition import Implicit
 from OFS.Folder import Folder
@@ -30,7 +31,6 @@ from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFCore.tests.test_PortalFolder import _AllowedUser
 from Products.CMFCore.tests.test_PortalFolder import _SensitiveSecurityPolicy
-from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import IUniqueIdHandler
 from Products.CMFUid.interfaces import UniqueIdError
 from Products.CMFUid.testing import UidEventZCMLLayer
@@ -51,9 +51,11 @@ class DummyUniqueIdHandlerTool(Implicit):
         self.counter = 0
 
     def register(self, ob):
+        from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
+
         uid_assigner = getUtility(IUniqueIdAnnotationManagement)
         annotation = uid_assigner(ob, UID_ATTRNAME)
-        annotation.setUid( self.counter )
+        annotation.setUid(self.counter)
         self.counter += 1
 
     def unregister(self, ob):
@@ -73,29 +75,30 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
         return UniqueIdAnnotationTool
 
+    def _makeOne(self, *args, **kw):
+        return self._getTargetClass()(*args, **kw)
+
     def setUp(self):
+        from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
+
         SecurityTest.setUp(self)
-        self.root._setObject('portal_uidannotation', self._getTargetClass()())
-        self.root._setObject('portal_uidhandler', DummyUniqueIdHandlerTool())
-
+        self.uidannotation = self._makeOne()
         sm = getSiteManager()
-        sm.registerUtility( self.root.portal_uidannotation
-                          , IUniqueIdAnnotationManagement
-                          )
+        sm.registerUtility(self.uidannotation, IUniqueIdAnnotationManagement)
+        sm.registerUtility(DummyUniqueIdHandlerTool(), IUniqueIdHandler)
 
-        self.root._setObject('dummy', DummyContent(id='dummy'))
-        self.root._setObject('site', Folder('site'))
+        self.app._setObject('dummy', DummyContent(id='dummy'))
+        self.app._setObject('site', Folder('site'))
 
         transaction.savepoint(optimistic=True)
 
-    def _initPolicyAndUser( self
+    def _initPolicyAndUser(self
                           , a_lambda=None
                           , v_lambda=None
                           , c_lambda=None
                           ):
-        from AccessControl import SecurityManager
 
-        def _promiscuous( *args, **kw ):
+        def _promiscuous(*args, **kw):
             return 1
 
         if a_lambda is None:
@@ -107,9 +110,9 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         if c_lambda is None:
             c_lambda = _promiscuous
 
-        scp = _SensitiveSecurityPolicy( v_lambda, c_lambda )
-        SecurityManager.setSecurityPolicy( scp )
-        newSecurityManager( None
+        scp = _SensitiveSecurityPolicy(v_lambda, c_lambda)
+        SecurityManager.setSecurityPolicy(scp)
+        newSecurityManager(None
                           , _AllowedUser(a_lambda).__of__(self.app.acl_users))
 
     def test_interfaces(self):
@@ -122,8 +125,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         verifyClass(IUniqueIdAnnotation, UniqueIdAnnotation)
 
     def test_setAndGetUid(self):
-        dummy = self.root.dummy
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
+        dummy = self.app.dummy
+        annotation = self.uidannotation(dummy, UID_ATTRNAME)
 
         self.assertEqual(annotation(), None)
         annotation.setUid(13)
@@ -145,8 +148,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
     def test_simulateItemAddAssigningUid(self):
         # an annotated object is set in place
         dummy = DummyContent(id='dummycontent')
-        self.root.portal_uidannotation.assign_on_add = True
-        self.root._setObject('dummycontent', dummy)
+        self.uidannotation.assign_on_add = True
+        self.app._setObject('dummycontent', dummy)
 
         annotation = getattr(dummy, UID_ATTRNAME, None)
 
@@ -155,26 +158,26 @@ class UniqueIdAnnotationToolTests(SecurityTest):
     def test_simulateItemAddRemovingUid(self):
         # an annotated object is set in place
         dummy = DummyContent(id='dummycontent')
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root._setObject('dummycontent', dummy)
+        self.uidannotation(dummy, UID_ATTRNAME)
+        self.app._setObject('dummycontent', dummy)
 
         self.assertRaises(AttributeError, getattr, dummy, UID_ATTRNAME)
 
     def test_simulateItemAddAssignsNewUid(self):
         # an annotated object is set in place
         dummy = DummyContent(id='dummycontent')
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root.portal_uidannotation.assign_on_add = True
-        self.root._setObject('dummycontent', dummy)
+        annotation = self.uidannotation(dummy, UID_ATTRNAME)
+        self.uidannotation.assign_on_add = True
+        self.app._setObject('dummycontent', dummy)
 
-        self.failIf( getattr(dummy, UID_ATTRNAME)()==annotation() )
+        self.failIf(getattr(dummy, UID_ATTRNAME)() == annotation())
 
     def test_simulateItemAddDoesNotTouchUid(self):
         # an annotated object is set in place
         dummy = DummyContent(id='dummycontent')
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root.portal_uidannotation.remove_on_add = False
-        self.root._setObject('dummycontent', dummy)
+        annotation = self.uidannotation(dummy, UID_ATTRNAME)
+        self.uidannotation.remove_on_add = False
+        self.app._setObject('dummycontent', dummy)
 
         self.assertEqual(getattr(dummy, UID_ATTRNAME), annotation)
 
@@ -182,9 +185,9 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         # an object is set in place, annotated and then renamed
         self._initPolicyAndUser() # allow copy/paste operations
         dummy = TheClass('dummy')
-        site = self.root.site
+        site = self.app.site
         site._setObject('dummy', dummy)
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
+        annotation = self.uidannotation(dummy, UID_ATTRNAME)
 
         transaction.savepoint(optimistic=True)
 
@@ -196,84 +199,84 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         # an object is set in place, annotated and then copied
         self._initPolicyAndUser() # allow copy/paste operations
         dummy = TheClass('dummy')
-        site = self.root.site
+        site = self.app.site
         site._setObject('dummy', dummy)
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root._setObject('folder1', Folder('folder1'))
+        self.uidannotation(dummy, UID_ATTRNAME)
+        self.app._setObject('folder1', Folder('folder1'))
 
         transaction.savepoint(optimistic=True)
         cookie = site.manage_copyObjects(ids=['dummy'])
-        self.root.folder1.manage_pasteObjects( cookie )
+        self.app.folder1.manage_pasteObjects(cookie)
 
-        self.assertRaises(AttributeError, getattr, self.root.folder1.dummy, UID_ATTRNAME)
+        self.assertRaises(AttributeError, getattr, self.app.folder1.dummy, UID_ATTRNAME)
 
     def test_simulateItemCloneRemovingUid2(self):
         # an object is set in place, annotated and then copied
         self._initPolicyAndUser() # allow copy/paste operations
         dummy = TheClass('dummy')
-        site = self.root.site
+        site = self.app.site
         site._setObject('dummy', dummy)
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root.portal_uidannotation.remove_on_add = False
-        self.root._setObject('folder1', Folder('folder1'))
+        self.uidannotation(dummy, UID_ATTRNAME)
+        self.uidannotation.remove_on_add = False
+        self.app._setObject('folder1', Folder('folder1'))
 
         transaction.savepoint(optimistic=True)
         cookie = site.manage_copyObjects(ids=['dummy'])
-        self.root.folder1.manage_pasteObjects( cookie )
+        self.app.folder1.manage_pasteObjects(cookie)
 
-        self.assertRaises(AttributeError, getattr, self.root.folder1.dummy, UID_ATTRNAME)
+        self.assertRaises(AttributeError, getattr, self.app.folder1.dummy, UID_ATTRNAME)
 
     def test_simulateItemCloneDoesNotTouchUid(self):
         # an object is set in place, annotated, and then copied
         self._initPolicyAndUser() # allow copy/paste operations
         dummy = TheClass('dummy')
-        site = self.root.site
+        site = self.app.site
         site._setObject('dummy', dummy)
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root.portal_uidannotation.remove_on_clone = False
-        self.root._setObject('folder1', Folder('folder1'))
+        annotation = self.uidannotation(dummy, UID_ATTRNAME)
+        self.uidannotation.remove_on_clone = False
+        self.app._setObject('folder1', Folder('folder1'))
 
         transaction.savepoint(optimistic=True)
         cookie = site.manage_copyObjects(ids=['dummy'])
-        self.root.folder1.manage_pasteObjects( cookie )
-        new_annotation = getattr(self.root.folder1.dummy, UID_ATTRNAME)
+        self.app.folder1.manage_pasteObjects(cookie)
+        new_annotation = getattr(self.app.folder1.dummy, UID_ATTRNAME)
 
-        self.assertEqual(annotation(), new_annotation() )
+        self.assertEqual(annotation(), new_annotation())
 
     def test_simulateItemCloneAssignsNewUid(self):
         # an object is set in place, annotated, and then copied
         self._initPolicyAndUser() # allow copy/paste operations
         dummy = TheClass('dummy')
-        site = self.root.site
+        site = self.app.site
         site._setObject('dummy', dummy)
-        annotation = self.root.portal_uidannotation(dummy, UID_ATTRNAME)
-        self.root.portal_uidannotation.assign_on_clone = True
-        self.root._setObject('folder1', Folder('folder1'))
+        annotation = self.uidannotation(dummy, UID_ATTRNAME)
+        self.uidannotation.assign_on_clone = True
+        self.app._setObject('folder1', Folder('folder1'))
 
         transaction.savepoint(optimistic=True)
         cookie = site.manage_copyObjects(ids=['dummy'])
-        self.root.folder1.manage_pasteObjects( cookie )
-        new_annotation = getattr(self.root.folder1.dummy, UID_ATTRNAME)
+        self.app.folder1.manage_pasteObjects(cookie)
+        new_annotation = getattr(self.app.folder1.dummy, UID_ATTRNAME)
 
-        self.failIf( annotation() == new_annotation() )
+        self.failIf(annotation() == new_annotation())
 
     def test_simulateNestedFolderCloneRemovingUid1(self):
         self._initPolicyAndUser() # allow copy/paste operations
-        self.root.site._setObject( 'foo', Folder(id='foo') )
-        self.root.site._setObject( 'foo2', Folder(id='foo2') )
-        foo = self.root.site.foo
-        foo._setObject( 'sub1', Folder(id='sub1') )
-        foo.sub1._setObject( 'sub2', Folder(id='sub2') )
-        foo.sub1.sub2._setObject( 'baz', DummyContent(id='baz', catalog=1) )
+        self.app.site._setObject('foo', Folder(id='foo'))
+        self.app.site._setObject('foo2', Folder(id='foo2'))
+        foo = self.app.site.foo
+        foo._setObject('sub1', Folder(id='sub1'))
+        foo.sub1._setObject('sub2', Folder(id='sub2'))
+        foo.sub1.sub2._setObject('baz', DummyContent(id='baz', catalog=1))
         baz = foo.sub1.sub2.baz
-        annotation = self.root.portal_uidannotation(baz, UID_ATTRNAME)
-        self.assertEqual( getattr(baz, UID_ATTRNAME), annotation )
+        annotation = self.uidannotation(baz, UID_ATTRNAME)
+        self.assertEqual(getattr(baz, UID_ATTRNAME), annotation)
 
         transaction.savepoint(optimistic=True)
-        cookie = self.root.site.manage_copyObjects(ids='foo')
-        self.root.site.foo2.manage_pasteObjects(cookie)
+        cookie = self.app.site.manage_copyObjects(ids='foo')
+        self.app.site.foo2.manage_pasteObjects(cookie)
 
-        self.assertRaises(AttributeError, getattr, self.root.site.foo2.foo.sub1.sub2.baz, UID_ATTRNAME)
+        self.assertRaises(AttributeError, getattr, self.app.site.foo2.foo.sub1.sub2.baz, UID_ATTRNAME)
 
 
 def test_suite():
