@@ -1,8 +1,8 @@
 Products.CMFUid Changelog
 =========================
 
-2.3.0-alpha (unreleased)
-------------------------
+2.3.0-beta (2012-03-21)
+-----------------------
 
 - Made sure converted tools are used as utilities.
 
