@@ -14,7 +14,7 @@
 """
 
 from Testing.ZopeTestCase.layer import ZopeLite
-from zope.site.hooks import setHooks
+from zope.component.hooks import setHooks
 from zope.testing.cleanup import cleanUp
 from Zope2.App import zcml
 
