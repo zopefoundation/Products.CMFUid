@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """Unique id generation and handling.
-
-$Id$
 """
 
 def initialize(context):

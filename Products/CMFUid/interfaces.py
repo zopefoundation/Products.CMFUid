@@ -15,8 +15,6 @@
 These interfaces are intentionaly kept close to those from Zope3. Additionaly
 handling (IUniqueIdHandler) and generation (IUniqueIdGenerator) of unique ids
 are kept separate.
-
-$Id$
 """
 
 from zope.interface import Interface

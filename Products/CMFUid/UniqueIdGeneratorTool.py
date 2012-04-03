@@ -13,8 +13,6 @@
 """Uid Generator.
 
 Provides support for generating unique ids.
-
-$Id$
 """
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
