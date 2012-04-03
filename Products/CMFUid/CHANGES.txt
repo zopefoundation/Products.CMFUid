@@ -10,7 +10,7 @@ Products.CMFUid Changelog
 
 - Made sure converted tools are used as utilities.
 
-- Require at least Zope 2.13.4.
+- Require at least Zope 2.13.12.
 
 
 2.2.1 (2010-07-04)
