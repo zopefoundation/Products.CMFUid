@@ -92,11 +92,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
         transaction.savepoint(optimistic=True)
 
-    def _initPolicyAndUser(self
-                          , a_lambda=None
-                          , v_lambda=None
-                          , c_lambda=None
-                          ):
+    def _initPolicyAndUser(self, a_lambda=None, v_lambda=None, c_lambda=None):
 
         def _promiscuous(*args, **kw):
             return 1
@@ -112,8 +108,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
         scp = _SensitiveSecurityPolicy(v_lambda, c_lambda)
         SecurityManager.setSecurityPolicy(scp)
-        newSecurityManager(None
-                          , _AllowedUser(a_lambda).__of__(self.app.acl_users))
+        newSecurityManager(None,
+                           _AllowedUser(a_lambda).__of__(self.app.acl_users))
 
     def test_interfaces(self):
         from Products.CMFUid.interfaces import IUniqueIdAnnotation
@@ -153,7 +149,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
         annotation = getattr(dummy, UID_ATTRNAME, None)
 
-        self.failUnless(annotation is not None)
+        self.assertTrue(annotation is not None)
 
     def test_simulateItemAddRemovingUid(self):
         # an annotated object is set in place
@@ -170,7 +166,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         self.uidannotation.assign_on_add = True
         self.app._setObject('dummycontent', dummy)
 
-        self.failIf(getattr(dummy, UID_ATTRNAME)() == annotation())
+        self.assertFalse(getattr(dummy, UID_ATTRNAME)() == annotation())
 
     def test_simulateItemAddDoesNotTouchUid(self):
         # an annotated object is set in place
@@ -208,7 +204,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         cookie = site.manage_copyObjects(ids=['dummy'])
         self.app.folder1.manage_pasteObjects(cookie)
 
-        self.assertRaises(AttributeError, getattr, self.app.folder1.dummy, UID_ATTRNAME)
+        self.assertRaises(AttributeError, getattr, self.app.folder1.dummy,
+                          UID_ATTRNAME)
 
     def test_simulateItemCloneRemovingUid2(self):
         # an object is set in place, annotated and then copied
@@ -224,7 +221,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         cookie = site.manage_copyObjects(ids=['dummy'])
         self.app.folder1.manage_pasteObjects(cookie)
 
-        self.assertRaises(AttributeError, getattr, self.app.folder1.dummy, UID_ATTRNAME)
+        self.assertRaises(AttributeError, getattr, self.app.folder1.dummy,
+                          UID_ATTRNAME)
 
     def test_simulateItemCloneDoesNotTouchUid(self):
         # an object is set in place, annotated, and then copied
@@ -258,7 +256,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         self.app.folder1.manage_pasteObjects(cookie)
         new_annotation = getattr(self.app.folder1.dummy, UID_ATTRNAME)
 
-        self.failIf(annotation() == new_annotation())
+        self.assertFalse(annotation() == new_annotation())
 
     def test_simulateNestedFolderCloneRemovingUid1(self):
         self._initPolicyAndUser() # allow copy/paste operations
@@ -276,7 +274,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         cookie = self.app.site.manage_copyObjects(ids='foo')
         self.app.site.foo2.manage_pasteObjects(cookie)
 
-        self.assertRaises(AttributeError, getattr, self.app.site.foo2.foo.sub1.sub2.baz, UID_ATTRNAME)
+        self.assertRaises(AttributeError, getattr,
+                          self.app.site.foo2.foo.sub1.sub2.baz, UID_ATTRNAME)
 
 
 def test_suite():

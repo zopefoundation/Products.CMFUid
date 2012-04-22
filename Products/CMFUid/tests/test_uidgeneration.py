@@ -42,8 +42,8 @@ class UniqueIdGeneratorToolTests(SecurityTest):
         generator = self._makeOne()
         uid1 = generator()
         uid2 = generator()
-        self.failIfEqual(uid1, uid2)
-        self.failIfEqual(uid1, None)
+        self.assertNotEqual(uid1, uid2)
+        self.assertNotEqual(uid1, None)
 
     def test_converter(self):
         generator = self._makeOne()
@@ -59,10 +59,10 @@ class UniqueIdGeneratorToolTests(SecurityTest):
         generator = self._makeOne()
         uid1 = generator()
         generator._uid_counter = Length(uid1)
-        self.failUnless(isinstance(generator._uid_counter, Length))
+        self.assertTrue(isinstance(generator._uid_counter, Length))
         uid2 = generator()
-        self.failUnless(isinstance(generator._uid_counter, int))
-        self.failIfEqual(uid1, uid2)
+        self.assertTrue(isinstance(generator._uid_counter, int))
+        self.assertNotEqual(uid1, uid2)
 
 
 def test_suite():
