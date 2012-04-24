@@ -53,10 +53,9 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
 
     id = 'portal_uidhandler'
 
-    manage_options = (({'label': 'Query',
-                         'action': 'manage_queryObject'},)
-                     + SimpleItem.manage_options
-                     )
+    manage_options = (
+        ({'label': 'Query', 'action': 'manage_queryObject'},) +
+        SimpleItem.manage_options)
 
     alternative_id = "portal_standard_uidhandler"
     meta_type = 'Unique Id Handler Tool'
@@ -107,8 +106,8 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         """
         UID_ATTRIBUTE_NAME = self.UID_ATTRIBUTE_NAME
         if getattr(aq_base(obj), UID_ATTRIBUTE_NAME, None) is None:
-            raise UniqueIdError, \
-                  "No unique id available to be unregistered on %r" % obj
+            raise UniqueIdError("No unique id available to be unregistered on "
+                                "%r" % obj)
 
         # delete the uid and reindex
         delattr(obj, UID_ATTRIBUTE_NAME)
@@ -134,7 +133,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         """
         uid = self.queryUid(obj, None)
         if uid is None:
-            raise UniqueIdError, "No unique id available on %r" % obj
+            raise UniqueIdError("No unique id available on %r" % obj)
         return uid
 
     security.declarePrivate('setUid')
@@ -143,7 +142,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         """
         # None is the only value a unique id shall never have!
         if uid is None:
-            raise UniqueIdError, "It's forbidden to set a unique id to 'None'."
+            raise UniqueIdError("It's forbidden to set a unique id to 'None'.")
 
         # check for uniqueness if enabled
         if check_uniqueness:
@@ -151,8 +150,8 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
             if result is not None and result != obj:
                 if callable(uid):
                     uid = uid()
-                raise UniqueIdError, \
-                      "The unique id '%s' is already in use" % uid
+                raise UniqueIdError("The unique id '%s' is already in use"
+                                    % uid)
 
         # everything is ok: set it!
         self._setUid(obj, uid)
@@ -194,7 +193,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
     def _getBrain(self, uid, queryBrainMethod):
         brain = queryBrainMethod(uid, default=None)
         if brain is None:
-            raise UniqueIdError, "No object found with '%s' as uid." % uid
+            raise UniqueIdError("No object found with '%s' as uid." % uid)
         return brain
 
     security.declarePublic('getBrain')
