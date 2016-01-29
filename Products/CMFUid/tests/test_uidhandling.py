@@ -27,6 +27,9 @@ from zope.testing.cleanup import cleanUp
 
 ZopeTestCase.installProduct('PluginIndexes')
 
+from Products.CMFCore.indexing import PortalCatalogProcessor
+from Products.CMFCore.interfaces import IPortalCatalogQueueProcessor
+
 
 class DummyUid:
     """A dummy uid that surely is of different type of the generated ones.
@@ -74,6 +77,7 @@ class UniqueIdHandlerTests(SecurityTest):
         sm.registerUtility(UniqueIdAnnotationTool(),
                            IUniqueIdAnnotationManagement)
         sm.registerUtility(UniqueIdGeneratorTool(), IUniqueIdGenerator)
+        sm.registerUtility(provided=IPortalCatalogQueueProcessor, factory=PortalCatalogProcessor)
 
         # Make sure we have our indices/columns
         uid_name = self.uidhandler.UID_ATTRIBUTE_NAME
