@@ -4,6 +4,8 @@ Products.CMFUid Changelog
 2.3.0 (unreleased)
 ------------------
 
+- Fix import for compatibility with Zope 4.
+
 
 2.3.0-beta (2012-03-21)
 -----------------------

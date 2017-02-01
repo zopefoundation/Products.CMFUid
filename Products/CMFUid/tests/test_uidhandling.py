@@ -13,19 +13,19 @@
 """Test the unique id handling.
 """
 
-import unittest
-import Testing
-
-from zope.component import getSiteManager
-from zope.interface.verify import verifyClass
-from zope.testing.cleanup import cleanUp
-
 from Products.CMFCore.interfaces import ICatalogTool
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummyFolder
 from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import IUniqueIdGenerator
+from Testing import ZopeTestCase
+from zope.component import getSiteManager
+from zope.interface.verify import verifyClass
+from zope.testing.cleanup import cleanUp
+
+
+ZopeTestCase.installProduct('PluginIndexes')
 
 
 class DummyUid:
@@ -36,7 +36,7 @@ class DummyUid:
 
 class DummyContent(DummyContent):
     """Objects may return non-ASCII when converted to str.
-    
+
     Think File and Image.
     """
     def __str__(self):
@@ -55,11 +55,12 @@ class UniqueIdHandlerTests(SecurityTest):
 
     def setUp(self):
         from Products.CMFCore.CatalogTool import CatalogTool
+        from Products.CMFCore.utils import registerToolInterface
         from Products.CMFUid.interfaces import IUniqueIdHandler
         from Products.CMFUid.UniqueIdAnnotationTool \
-                import UniqueIdAnnotationTool
+            import UniqueIdAnnotationTool
         from Products.CMFUid.UniqueIdGeneratorTool \
-                import UniqueIdGeneratorTool
+            import UniqueIdGeneratorTool
 
         SecurityTest.setUp(self)
         self.app._setObject('dummy', DummyContent(id='dummy'))
@@ -68,6 +69,7 @@ class UniqueIdHandlerTests(SecurityTest):
         self.uidhandler = self._makeOne()
         sm = getSiteManager()
         sm.registerUtility(self.ctool, ICatalogTool)
+        registerToolInterface('portal_catalog', ICatalogTool)
         sm.registerUtility(self.uidhandler, IUniqueIdHandler)
         sm.registerUtility(UniqueIdAnnotationTool(),
                            IUniqueIdAnnotationManagement)
@@ -287,9 +289,3 @@ class UniqueIdHandlerTests(SecurityTest):
         uid = handler.register(dummy)
         brains = catalog(cmf_uid=uid)
         self.assertEqual(len(brains), 0)
-
-
-def test_suite():
-    return unittest.TestSuite((
-        unittest.makeSuite(UniqueIdHandlerTests),
-        ))
