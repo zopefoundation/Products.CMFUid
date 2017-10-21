@@ -13,6 +13,7 @@
 """Unique id generation and handling.
 """
 
+
 def initialize(context):
 
     from Products.CMFCore import utils
@@ -21,14 +22,14 @@ def initialize(context):
     import UniqueIdGeneratorTool
     import UniqueIdHandlerTool
 
-
     tools = (
         UniqueIdAnnotationTool.UniqueIdAnnotationTool,
         UniqueIdGeneratorTool.UniqueIdGeneratorTool,
         UniqueIdHandlerTool.UniqueIdHandlerTool,
     )
 
-    utils.ToolInit( 'CMF Unique Id Tool'
-                  , tools=tools
-                  , icon='tool.gif'
-                  ).initialize(context)
+    utils.ToolInit(
+        'CMF Unique Id Tool',
+        tools=tools,
+        icon='tool.gif'
+    ).initialize(context)

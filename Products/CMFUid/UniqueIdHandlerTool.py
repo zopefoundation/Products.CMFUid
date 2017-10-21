@@ -28,8 +28,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import getUtility
 from zope.interface import implements
 
-from Products.CMFCore.interfaces import ICatalogTool
 from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
@@ -70,7 +70,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
     security = ClassSecurityInfo()
 
     def _reindexObject(self, obj):
-        ctool = getUtility(ICatalogTool)
+        ctool = getToolByName(self, 'portal_catalog')
         ctool.reindexObject(obj, idxs=[self.UID_ATTRIBUTE_NAME])
 
     def _setUid(self, obj, uid):
@@ -167,7 +167,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         generator = getUtility(IUniqueIdGenerator)
         uid = generator.convert(uid)
 
-        ctool = getUtility(ICatalogTool)
+        ctool = getToolByName(self, 'portal_catalog')
         searchMethod = getattr(ctool, searchMethodName)
         result = searchMethod({self.UID_ATTRIBUTE_NAME: uid})
         len_result = len(result)
