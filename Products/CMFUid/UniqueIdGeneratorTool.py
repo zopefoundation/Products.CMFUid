@@ -19,13 +19,14 @@ from AccessControl.SecurityInfo import ClassSecurityInfo
 from App.class_init import InitializeClass
 from BTrees.Length import Length
 from OFS.SimpleItem import SimpleItem
-from zope.interface import implements
+from zope.interface import implementer
 
 from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFUid.interfaces import IUniqueIdGenerator
 
 
+@implementer(IUniqueIdGenerator)
 class UniqueIdGeneratorTool(UniqueObject, SimpleItem):
 
     """Generator of unique ids.
@@ -33,8 +34,6 @@ class UniqueIdGeneratorTool(UniqueObject, SimpleItem):
     This is a dead simple implementation using a counter. May cause
     ConflictErrors under high load and the values are predictable.
     """
-
-    implements(IUniqueIdGenerator)
 
     id = 'portal_uidgenerator'
     alternative_id = 'portal_standard_uidgenerator'
@@ -46,8 +45,8 @@ class UniqueIdGeneratorTool(UniqueObject, SimpleItem):
     def __init__(self):
         """Initialize the generator
         """
-        # The previous ``BTrees.Length.Length`` implementation may cause 
-        # double unique ids under high load. So for the moment we just use 
+        # The previous ``BTrees.Length.Length`` implementation may cause
+        # double unique ids under high load. So for the moment we just use
         # a simple counter.
         self._uid_counter = 0
 

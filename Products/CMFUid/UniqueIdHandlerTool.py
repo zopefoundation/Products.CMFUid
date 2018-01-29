@@ -26,7 +26,7 @@ from App.Common import package_home
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implementer
 
 from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.utils import getToolByName
@@ -44,12 +44,10 @@ UID_ATTRIBUTE_NAME = 'cmf_uid'
 _wwwdir = os.path.join(package_home(globals()), 'www')
 
 
+@implementer(IUniqueIdHandler, IUniqueIdBrainQuery, IUniqueIdUnrestrictedQuery)
 class UniqueIdHandlerTool(UniqueObject, SimpleItem):
 
     __doc__ = __doc__ # copy from module
-
-    implements(IUniqueIdHandler, IUniqueIdBrainQuery,
-               IUniqueIdUnrestrictedQuery)
 
     id = 'portal_uidhandler'
 

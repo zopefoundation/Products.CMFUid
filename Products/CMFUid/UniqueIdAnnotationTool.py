@@ -24,7 +24,7 @@ from OFS.SimpleItem import SimpleItem
 from Persistence import Persistent
 from zope.component import queryUtility
 from zope.container.interfaces import IObjectAddedEvent
-from zope.interface import implements
+from zope.interface import implementer
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import registerToolInterface
@@ -34,12 +34,11 @@ from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
 from Products.CMFUid.interfaces import UniqueIdError
 
 
+@implementer(IUniqueIdAnnotation)
 class UniqueIdAnnotation(Persistent, Implicit):
 
     """Unique id object used as annotation on (content) objects.
     """
-
-    implements(IUniqueIdAnnotation)
 
     def __init__(self, obj, id):
         """See IUniqueIdAnnotation.
@@ -107,11 +106,10 @@ def handleUidAnnotationEvent(ob, event):
                 uidtool.register(ob)
 
 
+@implementer(IUniqueIdAnnotationManagement)
 class UniqueIdAnnotationTool(UniqueObject, SimpleItem, PropertyManager):
 
     __doc__ = __doc__ # copy from module
-
-    implements(IUniqueIdAnnotationManagement)
 
     manage_options = (
         PropertyManager.manage_options +
