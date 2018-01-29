@@ -23,7 +23,7 @@ from Acquisition import Implicit
 from OFS.Folder import Folder
 from zope.component import getSiteManager
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface.verify import verifyClass
 
 from Products.CMFCore.interfaces import IContentish
@@ -38,14 +38,13 @@ from Products.CMFUid.testing import UidEventZCMLLayer
 UID_ATTRNAME = 'cmf_uid'
 
 
+@implementer(IContentish)
 class TheClass(Folder):
+    pass
 
-    implements(IContentish)
 
-
+@implementer(IUniqueIdHandler)
 class DummyUniqueIdHandlerTool(Implicit):
-
-    implements(IUniqueIdHandler)
 
     def __init__(self):
         self.counter = 0
