@@ -7,7 +7,7 @@ install:
     - pip install coveralls coverage
     - pip install -U -e .
 script:
-    - coverage run -m zope.testrunner --path=src --all -v
+    - coverage run -m zope.testrunner --path=Products --all -v
 after_success:
     - coveralls
 notifications:
