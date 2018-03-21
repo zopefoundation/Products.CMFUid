@@ -7,20 +7,21 @@ NAME = 'CMFUid'
 here = os.path.abspath(os.path.dirname(__file__))
 package = os.path.join(here, 'Products', NAME)
 
-def _package_doc(name):
-    with open(os.path.join(package, name)) as f:
+
+def _read(name):
+    with open(name) as f:
         return f.read()
 
+
 _boundary = '\n' + ('-' * 60) + '\n\n'
-README = ( _package_doc('README.txt')
-         + _boundary
-         + _package_doc('CHANGES.txt')
-         + _boundary
-         + "Download\n========"
-         )
+README = _boundary.join([
+    _read('README.rst'),
+    _read('CHANGES.rst'),
+])
+
 
 setup(name='Products.%s' % NAME,
-      version=_package_doc('version.txt').strip(),
+      version="3.0.dev0",
       description='Uid product for the Zope Content Management Framework',
       long_description=README,
       classifiers=[
