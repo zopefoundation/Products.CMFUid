@@ -6,8 +6,7 @@ Products.CMFUid Changelog
 
 - Require `Zope >= 4`.
 
-- Prepare for Python 2 / 3 compatibility.
-  [pbauer]
+- Add support for Python 3.5 and 3.6.
 
 - Adapt tests to the new indexing operations queueing.
   Part of PLIP 1343: https://github.com/plone/Products.CMFPlone/issues/1343
