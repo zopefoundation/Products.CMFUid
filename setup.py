@@ -8,8 +8,8 @@ here = os.path.abspath(os.path.dirname(__file__))
 package = os.path.join(here, 'Products', NAME)
 
 def _package_doc(name):
-    f = open(os.path.join(package, name))
-    return f.read()
+    with open(os.path.join(package, name)) as f:
+        return f.read()
 
 _boundary = '\n' + ('-' * 60) + '\n\n'
 README = ( _package_doc('README.txt')
@@ -26,18 +26,18 @@ setup(name='Products.%s' % NAME,
       classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Framework :: Plone",
-        "Framework :: Zope2",
+        "Framework :: Zope :: 4",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Zope Public License",
         "Programming Language :: Python",
         "Topic :: Software Development",
         "Topic :: Software Development :: Libraries :: Application Frameworks",
         ],
-      keywords='web application server zope zope2 cmf',
+      keywords='web application server zope cmf',
       author="Zope Foundation and Contributors",
       author_email="zope-cmf@zope.org",
-      url="http://pypi.python.org/pypi/Products.CMFUid",
-      license="ZPL 2.1 (http://www.zope.org/Resources/License/ZPL-2.1)",
+      url="https://github.com/zopefoundation/Products.CMFUid",
+      license="ZPL 2.1",
       packages=find_packages(),
       include_package_data=True,
       namespace_packages=['Products'],
@@ -45,10 +45,16 @@ setup(name='Products.%s' % NAME,
       setup_requires=['eggtestinfo',
                      ],
       install_requires=[
-          'setuptools',
-          'Zope2 >= 2.13.12',
-          'Products.CMFCore',
+          'Products.BTreeFolder2 >= 4.0.dev0',
+          'Products.CMFCore >= 2.4.0b3',
           'Products.GenericSetup',
+          'Products.ZCTextIndex >= 4.0.dev0',
+          'Products.ZCatalog >= 4.0.dev0',
+          'Products.ZSQLMethods >= 3.0.dev0',
+          'Zope',
+          'Products.GenericSetup >= 1.10.0.dev0',
+          'Products.MailHost >= 4.0.dev0',
+          'setuptools',
           ],
       tests_require=[
           'zope.testing >= 3.7.0',
