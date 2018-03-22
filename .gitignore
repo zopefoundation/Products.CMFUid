@@ -3,6 +3,7 @@
 *.mo
 *.pyc
 *.pyo
+.Python
 .coverage
 .coverage.*
 .eggs
@@ -17,6 +18,9 @@ dist
 downloads
 eggs
 htmlcov/
+include/
+lib/
 local.cfg
 parts
+pip-selfcheck.json
 var
