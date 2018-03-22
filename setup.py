@@ -44,15 +44,8 @@ setup(
         'eggtestinfo',
     ],
     install_requires=[
-        'Products.BTreeFolder2 >= 4.0.dev0',
         'Products.CMFCore >= 2.4.0b3',
-        'Products.GenericSetup',
-        'Products.ZCTextIndex >= 4.0.dev0',
-        'Products.ZCatalog >= 4.0.dev0',
-        'Products.ZSQLMethods >= 3.0.dev0',
         'Zope',
-        'Products.GenericSetup >= 1.10.0.dev0',
-        'Products.MailHost >= 4.0.dev0',
         'setuptools',
     ],
     tests_require=[
