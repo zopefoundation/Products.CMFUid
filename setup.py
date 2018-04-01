@@ -48,7 +48,7 @@ setup(
         'eggtestinfo',
     ],
     install_requires=[
-        'Products.CMFCore >= 2.4.0b3',
+        'Products.CMFCore >= 2.4.0dev',
         'Zope',
         'setuptools',
     ],
