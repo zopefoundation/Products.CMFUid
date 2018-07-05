@@ -1,4 +1,16 @@
 include *.txt
+include *.rst
+include .coveragerc
+include buildout.cfg
+include tox.ini
+
+exclude MANIFEST.in
+
+include .gitignore
+exclude .gitignore
+
+include .travis.yml
+exclude .travis.yml
 
 recursive-include Products *
 
