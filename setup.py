@@ -49,6 +49,7 @@ setup(
     ],
     install_requires=[
         'Products.CMFCore >= 2.4.0dev',
+        'Products.ZCatalog >= 4.1.1',
         'Zope',
         'setuptools',
     ],
