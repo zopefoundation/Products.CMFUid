@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-3.0 (unreleased)
+3.0 (2018-07-05)
 ----------------
 
 - Require `Zope >= 4`.
