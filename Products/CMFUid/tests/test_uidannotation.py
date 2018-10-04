@@ -79,9 +79,12 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def setUp(self):
         from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
+        from Products.CMFCore.utils import registerToolInterface
 
         SecurityTest.setUp(self)
         self.uidannotation = self._makeOne()
+        registerToolInterface('portal_uidhandler', IUniqueIdHandler)
+
         sm = getSiteManager()
         sm.registerUtility(self.uidannotation, IUniqueIdAnnotationManagement)
         sm.registerUtility(DummyUniqueIdHandlerTool(), IUniqueIdHandler)
