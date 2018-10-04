@@ -4,7 +4,8 @@ Products.CMFUid Changelog
 3.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- fix test isolation problems
+  [petschki]
 
 
 3.0 (2018-07-05)
