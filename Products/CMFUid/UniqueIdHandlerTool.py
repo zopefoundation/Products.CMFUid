@@ -20,8 +20,8 @@ import Missing
 import os
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
+from AccessControl.class_init import InitializeClass
 from Acquisition import aq_base
-from App.class_init import InitializeClass
 from App.Common import package_home
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
