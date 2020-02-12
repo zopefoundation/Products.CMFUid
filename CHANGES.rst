@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Remove DeprecationWarning: "InitializeClass is deprecated.
+  Please import from AccessControl.class_init."
+  Works now with Zope 5
 
 
 3.0.1 (2018-11-07)
