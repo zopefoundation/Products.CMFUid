@@ -16,7 +16,7 @@ Provides support for generating unique ids.
 """
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
-from App.class_init import InitializeClass
+from AccessControl.class_init import InitializeClass
 from BTrees.Length import Length
 from OFS.SimpleItem import SimpleItem
 from zope.interface import implementer
