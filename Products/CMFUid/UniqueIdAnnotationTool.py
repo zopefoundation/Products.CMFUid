@@ -17,7 +17,7 @@ Provides support for managing unique id annotations.
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
-from App.class_init import InitializeClass
+from AccessControl.class_init import InitializeClass
 from OFS.interfaces import IObjectClonedEvent
 from OFS.PropertyManager import PropertyManager
 from OFS.SimpleItem import SimpleItem
