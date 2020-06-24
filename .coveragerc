@@ -1,6 +1,0 @@
-[run]
-branch = True
-source = Products.CMFUid
-
-[report]
-precision = 2
