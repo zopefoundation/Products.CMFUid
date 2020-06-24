@@ -1,18 +1,10 @@
 Products.CMFUid Changelog
 =========================
 
-3.0.2 (unreleased)
+3.0.2 (2020-06-24)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
-Bug fixes:
+- Clean up and sanitize package and tests configurations
 
 - Remove DeprecationWarning: "InitializeClass is deprecated.
   Please import from AccessControl.class_init."
