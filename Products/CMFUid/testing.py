@@ -14,9 +14,9 @@
 """
 
 from Testing.ZopeTestCase.layer import ZopeLite
+from Zope2.App import zcml
 from zope.component.hooks import setHooks
 from zope.testing.cleanup import cleanUp
-from Zope2.App import zcml
 
 
 class UidEventZCMLLayer(ZopeLite):

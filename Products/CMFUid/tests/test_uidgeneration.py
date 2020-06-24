@@ -14,7 +14,6 @@
 """
 
 import unittest
-import Testing
 
 from BTrees.Length import Length
 from zope.interface.verify import verifyClass

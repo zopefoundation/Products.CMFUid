@@ -14,7 +14,6 @@
 """
 
 import unittest
-import Testing
 
 import transaction
 from AccessControl import SecurityManager
@@ -31,9 +30,11 @@ from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFCore.tests.test_PortalFolder import _AllowedUser
 from Products.CMFCore.tests.test_PortalFolder import _SensitiveSecurityPolicy
-from Products.CMFUid.interfaces import IUniqueIdHandler
-from Products.CMFUid.interfaces import UniqueIdError
-from Products.CMFUid.testing import UidEventZCMLLayer
+
+from ..interfaces import IUniqueIdHandler
+from ..interfaces import UniqueIdError
+from ..testing import UidEventZCMLLayer
+
 
 UID_ATTRNAME = 'cmf_uid'
 
@@ -117,7 +118,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         from Products.CMFUid.interfaces import IUniqueIdAnnotation
         from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
         from Products.CMFUid.UniqueIdAnnotationTool \
-                import UniqueIdAnnotation
+            import UniqueIdAnnotation
 
         verifyClass(IUniqueIdAnnotationManagement, self._getTargetClass())
         verifyClass(IUniqueIdAnnotation, UniqueIdAnnotation)
@@ -181,7 +182,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def test_simulateItemRename(self):
         # an object is set in place, annotated and then renamed
-        self._initPolicyAndUser() # allow copy/paste operations
+        self._initPolicyAndUser()  # allow copy/paste operations
         dummy = TheClass('dummy')
         site = self.app.site
         site._setObject('dummy', dummy)
@@ -195,7 +196,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def test_simulateItemCloneRemovingUid1(self):
         # an object is set in place, annotated and then copied
-        self._initPolicyAndUser() # allow copy/paste operations
+        self._initPolicyAndUser()  # allow copy/paste operations
         dummy = TheClass('dummy')
         site = self.app.site
         site._setObject('dummy', dummy)
@@ -211,7 +212,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def test_simulateItemCloneRemovingUid2(self):
         # an object is set in place, annotated and then copied
-        self._initPolicyAndUser() # allow copy/paste operations
+        self._initPolicyAndUser()  # allow copy/paste operations
         dummy = TheClass('dummy')
         site = self.app.site
         site._setObject('dummy', dummy)
@@ -228,7 +229,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def test_simulateItemCloneDoesNotTouchUid(self):
         # an object is set in place, annotated, and then copied
-        self._initPolicyAndUser() # allow copy/paste operations
+        self._initPolicyAndUser()  # allow copy/paste operations
         dummy = TheClass('dummy')
         site = self.app.site
         site._setObject('dummy', dummy)
@@ -245,7 +246,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def test_simulateItemCloneAssignsNewUid(self):
         # an object is set in place, annotated, and then copied
-        self._initPolicyAndUser() # allow copy/paste operations
+        self._initPolicyAndUser()  # allow copy/paste operations
         dummy = TheClass('dummy')
         site = self.app.site
         site._setObject('dummy', dummy)
@@ -261,7 +262,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         self.assertFalse(annotation() == new_annotation())
 
     def test_simulateNestedFolderCloneRemovingUid1(self):
-        self._initPolicyAndUser() # allow copy/paste operations
+        self._initPolicyAndUser()  # allow copy/paste operations
         self.app.site._setObject('foo', Folder(id='foo'))
         self.app.site._setObject('foo2', Folder(id='foo2'))
         foo = self.app.site.foo

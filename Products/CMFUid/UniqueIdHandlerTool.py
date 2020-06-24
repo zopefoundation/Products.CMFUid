@@ -16,11 +16,11 @@ Provides support for accessing unique ids on content object.
 """
 
 import logging
-import Missing
 import os
 
-from AccessControl.SecurityInfo import ClassSecurityInfo
+import Missing
 from AccessControl.class_init import InitializeClass
+from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import aq_base
 from App.Common import package_home
 from OFS.SimpleItem import SimpleItem
@@ -29,15 +29,17 @@ from zope.component import getUtility
 from zope.interface import implementer
 
 from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import registerToolInterface
-from Products.CMFCore.utils import UniqueObject
-from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
-from Products.CMFUid.interfaces import IUniqueIdBrainQuery
-from Products.CMFUid.interfaces import IUniqueIdGenerator
-from Products.CMFUid.interfaces import IUniqueIdHandler
-from Products.CMFUid.interfaces import IUniqueIdUnrestrictedQuery
-from Products.CMFUid.interfaces import UniqueIdError
+
+from .interfaces import IUniqueIdAnnotationManagement
+from .interfaces import IUniqueIdBrainQuery
+from .interfaces import IUniqueIdGenerator
+from .interfaces import IUniqueIdHandler
+from .interfaces import IUniqueIdUnrestrictedQuery
+from .interfaces import UniqueIdError
+
 
 UID_ATTRIBUTE_NAME = 'cmf_uid'
 
@@ -47,7 +49,7 @@ _wwwdir = os.path.join(package_home(globals()), 'www')
 @implementer(IUniqueIdHandler, IUniqueIdBrainQuery, IUniqueIdUnrestrictedQuery)
 class UniqueIdHandlerTool(UniqueObject, SimpleItem):
 
-    __doc__ = __doc__ # copy from module
+    __doc__ = __doc__  # copy from module
 
     id = 'portal_uidhandler'
 
@@ -55,7 +57,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         ({'label': 'Query', 'action': 'manage_queryObject'},) +
         SimpleItem.manage_options)
 
-    alternative_id = "portal_standard_uidhandler"
+    alternative_id = 'portal_standard_uidhandler'
     meta_type = 'Unique Id Handler Tool'
 
     # make the uid attribute name available for the unit tests
@@ -86,6 +88,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
             self._reindexObject(obj)
 
     security.declarePublic('register')
+
     def register(self, obj):
         """See IUniqueIdSet.
         """
@@ -99,19 +102,21 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         return uid
 
     security.declareProtected(ManagePortal, 'unregister')
+
     def unregister(self, obj):
         """See IUniqueIdSet.
         """
         UID_ATTRIBUTE_NAME = self.UID_ATTRIBUTE_NAME
         if getattr(aq_base(obj), UID_ATTRIBUTE_NAME, None) is None:
-            raise UniqueIdError("No unique id available to be unregistered on "
-                                "%r" % obj)
+            raise UniqueIdError('No unique id available to be unregistered on '
+                                '%r' % obj)
 
         # delete the uid and reindex
         delattr(obj, UID_ATTRIBUTE_NAME)
         self._reindexObject(obj)
 
     security.declarePublic('queryUid')
+
     def queryUid(self, obj, default=None):
         """See IUniqueIdQuery.
         """
@@ -126,15 +131,17 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         return uid
 
     security.declarePublic('getUid')
+
     def getUid(self, obj):
         """See IUniqueIdQuery.
         """
         uid = self.queryUid(obj, None)
         if uid is None:
-            raise UniqueIdError("No unique id available on %r" % obj)
+            raise UniqueIdError('No unique id available on %r' % obj)
         return uid
 
     security.declarePrivate('setUid')
+
     def setUid(self, obj, uid, check_uniqueness=True):
         """See IUniqueIdSet.
         """
@@ -178,11 +185,12 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         # the same uid (uups!)
         if len_result > 1:
             logging.getLogger('CMFUid').error(
-                "ASSERT: %d objects have %r as uid!!!", len_result, uid)
+                'ASSERT: %d objects have %r as uid!!!', len_result, uid)
 
         return result[0]
 
     security.declarePublic('queryBrain')
+
     def queryBrain(self, uid, default=None):
         """See IUniqueIdBrainQuery.
         """
@@ -195,18 +203,21 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         return brain
 
     security.declarePublic('getBrain')
+
     def getBrain(self, uid):
         """See IUniqueIdBrainQuery.
         """
         return self._getBrain(uid, self.queryBrain)
 
     security.declarePublic('getObject')
+
     def getObject(self, uid):
         """See IUniqueIdQuery.
         """
         return self.getBrain(uid).getObject()
 
     security.declarePublic('queryObject')
+
     def queryObject(self, uid, default=None):
         """See IUniqueIdQuery.
         """
@@ -216,24 +227,28 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
             return default
 
     security.declarePrivate('unrestrictedQueryBrain')
+
     def unrestrictedQueryBrain(self, uid, default=None):
         """See IUniqueIdUnrestrictedQuery.
         """
         return self._queryBrain(uid, 'unrestrictedSearchResults', default)
 
     security.declarePrivate('unrestrictedGetBrain')
+
     def unrestrictedGetBrain(self, uid):
         """See IUniqueIdUnrestrictedQuery.
         """
         return self._getBrain(uid, self.unrestrictedQueryBrain)
 
     security.declarePrivate('unrestrictedGetObject')
+
     def unrestrictedGetObject(self, uid):
         """See IUniqueIdUnrestrictedQuery.
         """
         return self.unrestrictedGetBrain(uid).getObject()
 
     security.declarePrivate('unrestrictedQueryObject')
+
     def unrestrictedQueryObject(self, uid, default=None):
         """See IUniqueIdUnrestrictedQuery.
         """
@@ -243,7 +258,11 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
             return default
 
     security.declareProtected(ManagePortal, 'manage_queryObject')
+
     manage_queryObject = PageTemplateFile('queryUID.pt', _wwwdir)
 
+
 InitializeClass(UniqueIdHandlerTool)
+
+
 registerToolInterface('portal_uidhandler', IUniqueIdHandler)

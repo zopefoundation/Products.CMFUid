@@ -31,5 +31,5 @@ def initialize(context):
     utils.ToolInit(
         'CMF Unique Id Tool',
         tools=tools,
-        icon='tool.gif'
+        icon='tool.gif',
     ).initialize(context)

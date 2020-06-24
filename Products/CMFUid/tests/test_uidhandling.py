@@ -13,22 +13,23 @@
 """Test the unique id handling.
 """
 
-from Products.CMFCore.interfaces import ICatalogTool
-from Products.CMFCore.tests.base.dummy import DummyContent
-from Products.CMFCore.tests.base.dummy import DummyFolder
-from Products.CMFCore.tests.base.testcase import SecurityTest
-from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
-from Products.CMFUid.interfaces import IUniqueIdGenerator
 from Testing import ZopeTestCase
 from zope.component import getSiteManager
 from zope.interface.verify import verifyClass
 from zope.testing.cleanup import cleanUp
 
+from Products.CMFCore.indexing import PortalCatalogProcessor
+from Products.CMFCore.interfaces import ICatalogTool
+from Products.CMFCore.interfaces import IPortalCatalogQueueProcessor
+from Products.CMFCore.tests.base.dummy import DummyContent
+from Products.CMFCore.tests.base.dummy import DummyFolder
+from Products.CMFCore.tests.base.testcase import SecurityTest
+
+from ..interfaces import IUniqueIdAnnotationManagement
+from ..interfaces import IUniqueIdGenerator
+
 
 ZopeTestCase.installProduct('PluginIndexes')
-
-from Products.CMFCore.indexing import PortalCatalogProcessor
-from Products.CMFCore.interfaces import IPortalCatalogQueueProcessor
 
 
 class DummyUid:
@@ -77,7 +78,8 @@ class UniqueIdHandlerTests(SecurityTest):
         sm.registerUtility(UniqueIdAnnotationTool(),
                            IUniqueIdAnnotationManagement)
         sm.registerUtility(UniqueIdGeneratorTool(), IUniqueIdGenerator)
-        sm.registerUtility(provided=IPortalCatalogQueueProcessor, factory=PortalCatalogProcessor)
+        sm.registerUtility(provided=IPortalCatalogQueueProcessor,
+                           factory=PortalCatalogProcessor)
 
         # Make sure we have our indices/columns
         uid_name = self.uidhandler.UID_ATTRIBUTE_NAME
@@ -119,7 +121,9 @@ class UniqueIdHandlerTests(SecurityTest):
         self.assertEqual(handler.queryObject(uid + 1, None), None)
         self.assertRaises(UniqueIdError, handler.getObject, uid + 1)
         self.assertEqual(handler.unrestrictedQueryObject(uid + 1, None), None)
-        self.assertRaises(UniqueIdError, handler.unrestrictedGetObject, uid + 1)
+        self.assertRaises(UniqueIdError,
+                          handler.unrestrictedGetObject,
+                          uid + 1)
 
     def test_getUidOfRegisteredObject(self):
         handler = self.uidhandler

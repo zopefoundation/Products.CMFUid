@@ -15,15 +15,16 @@
 Provides support for generating unique ids.
 """
 
-from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.class_init import InitializeClass
+from AccessControl.SecurityInfo import ClassSecurityInfo
 from BTrees.Length import Length
 from OFS.SimpleItem import SimpleItem
 from zope.interface import implementer
 
-from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.utils import UniqueObject
-from Products.CMFUid.interfaces import IUniqueIdGenerator
+from Products.CMFCore.utils import registerToolInterface
+
+from .interfaces import IUniqueIdGenerator
 
 
 @implementer(IUniqueIdGenerator)
@@ -42,6 +43,7 @@ class UniqueIdGeneratorTool(UniqueObject, SimpleItem):
     security = ClassSecurityInfo()
 
     security.declarePrivate('__init__')
+
     def __init__(self):
         """Initialize the generator
         """
@@ -51,6 +53,7 @@ class UniqueIdGeneratorTool(UniqueObject, SimpleItem):
         self._uid_counter = 0
 
     security.declarePrivate('__call__')
+
     def __call__(self):
         """See IUniqueIdGenerator.
         """
@@ -62,10 +65,14 @@ class UniqueIdGeneratorTool(UniqueObject, SimpleItem):
         return self._uid_counter
 
     security.declarePrivate('convert')
+
     def convert(self, uid):
         """See IUniqueIdGenerator.
         """
         return int(uid)
 
+
 InitializeClass(UniqueIdGeneratorTool)
+
+
 registerToolInterface('portal_uidgenerator', IUniqueIdGenerator)

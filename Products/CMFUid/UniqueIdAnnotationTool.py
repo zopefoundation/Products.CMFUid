@@ -15,9 +15,9 @@
 Provides support for managing unique id annotations.
 """
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
-from AccessControl.class_init import InitializeClass
 from OFS.interfaces import IObjectClonedEvent
 from OFS.PropertyManager import PropertyManager
 from OFS.SimpleItem import SimpleItem
@@ -26,12 +26,13 @@ from zope.component import queryUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.interface import implementer
 
+from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import registerToolInterface
-from Products.CMFCore.utils import UniqueObject
-from Products.CMFUid.interfaces import IUniqueIdAnnotation
-from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
-from Products.CMFUid.interfaces import UniqueIdError
+
+from .interfaces import IUniqueIdAnnotation
+from .interfaces import IUniqueIdAnnotationManagement
+from .interfaces import UniqueIdError
 
 
 @implementer(IUniqueIdAnnotation)
@@ -62,6 +63,7 @@ class UniqueIdAnnotation(Persistent, Implicit):
         """
         self._uid = uid
 
+
 InitializeClass(UniqueIdAnnotation)
 
 
@@ -75,7 +77,8 @@ def handleUidAnnotationEvent(ob, event):
             uidtool = getToolByName(ob, 'portal_uidhandler', None)
             if anno_tool is not None:
                 remove_on_add = anno_tool.getProperty('remove_on_add', False)
-                remove_on_clone = anno_tool.getProperty('remove_on_clone', False)
+                remove_on_clone = anno_tool.getProperty('remove_on_clone',
+                                                        False)
                 assign_on_add = anno_tool.getProperty('assign_on_add', False)
 
                 if (remove_on_add and remove_on_clone) or assign_on_add:
@@ -109,7 +112,7 @@ def handleUidAnnotationEvent(ob, event):
 @implementer(IUniqueIdAnnotationManagement)
 class UniqueIdAnnotationTool(UniqueObject, SimpleItem, PropertyManager):
 
-    __doc__ = __doc__ # copy from module
+    __doc__ = __doc__  # copy from module
 
     manage_options = (
         PropertyManager.manage_options +
@@ -117,7 +120,7 @@ class UniqueIdAnnotationTool(UniqueObject, SimpleItem, PropertyManager):
     )
 
     id = 'portal_uidannotation'
-    alternative_id = "portal_standard_uidannotation"
+    alternative_id = 'portal_standard_uidannotation'
     meta_type = 'Unique Id Annotation Tool'
 
     security = ClassSecurityInfo()
@@ -127,21 +130,25 @@ class UniqueIdAnnotationTool(UniqueObject, SimpleItem, PropertyManager):
     assign_on_add = False
     assign_on_clone = False
     _properties = (
-    {'id': 'remove_on_add', 'type': 'boolean', 'mode': 'w',
-     'label': "Remove the objects unique id on add (and import)"},
-    {'id': 'remove_on_clone', 'type': 'boolean', 'mode': 'w',
-     'label': 'Remove the objects unique id on clone (CAUTION !!!)'},
-    {'id': 'assign_on_add', 'type': 'boolean', 'mode': 'w',
-     'label': "Assign a unique ID when an object is added"},
-    {'id': 'assign_on_clone', 'type': 'boolean', 'mode': 'w',
-     'label': "Assign a unique ID when an object is cloned"},
+        {'id': 'remove_on_add', 'type': 'boolean', 'mode': 'w',
+         'label': 'Remove the objects unique id on add (and import)'},
+        {'id': 'remove_on_clone', 'type': 'boolean', 'mode': 'w',
+         'label': 'Remove the objects unique id on clone (CAUTION !!!)'},
+        {'id': 'assign_on_add', 'type': 'boolean', 'mode': 'w',
+         'label': 'Assign a unique ID when an object is added'},
+        {'id': 'assign_on_clone', 'type': 'boolean', 'mode': 'w',
+         'label': 'Assign a unique ID when an object is cloned'},
     )
 
     security.declarePrivate('__call__')
+
     def __call__(self, obj, id):
         """See IUniqueIdAnnotationManagement.
         """
         return UniqueIdAnnotation(obj, id)
 
+
 InitializeClass(UniqueIdAnnotationTool)
+
+
 registerToolInterface('portal_uidannotation', IUniqueIdAnnotationManagement)
