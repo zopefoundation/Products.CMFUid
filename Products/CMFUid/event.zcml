@@ -3,7 +3,7 @@
 
   <subscriber
       for="Products.CMFCore.interfaces.IContentish
-           zope.component.interfaces.IObjectEvent"
+           zope.interface.interfaces.IObjectEvent"
       handler=".UniqueIdAnnotationTool.handleUidAnnotationEvent"
       />
 
