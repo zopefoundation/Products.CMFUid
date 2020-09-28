@@ -6,14 +6,18 @@ python:
     - 3.6
     - 3.7
     - 3.8
+env:
+    TOXENV=py
+matrix:
+     include:
+         - python: "3.8"
+           env: TOXENV=lint
+           after_success:
 install:
+    - pip install -U pip setuptools tox
     - pip install coveralls coverage
-    - pip install -U setuptools
-    - pip install zc.buildout
-    - buildout bootstrap
-    - buildout
 script:
-    - coverage run bin/test --all -v
+    - tox
 after_success:
     - coveralls
 notifications:

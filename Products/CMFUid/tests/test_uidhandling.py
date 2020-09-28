@@ -58,13 +58,13 @@ class UniqueIdHandlerTests(SecurityTest):
         return self._getTargetClass()(*args, **kw)
 
     def setUp(self):
+        from Products.CMFUid.interfaces import IUniqueIdHandler
+        from Products.CMFUid.UniqueIdAnnotationTool import \
+            UniqueIdAnnotationTool
+        from Products.CMFUid.UniqueIdGeneratorTool import UniqueIdGeneratorTool
+
         from Products.CMFCore.CatalogTool import CatalogTool
         from Products.CMFCore.utils import registerToolInterface
-        from Products.CMFUid.interfaces import IUniqueIdHandler
-        from Products.CMFUid.UniqueIdAnnotationTool \
-            import UniqueIdAnnotationTool
-        from Products.CMFUid.UniqueIdGeneratorTool \
-            import UniqueIdGeneratorTool
 
         SecurityTest.setUp(self)
         self.app._setObject('dummy', DummyContent(id='dummy'))

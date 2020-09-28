@@ -70,8 +70,8 @@ class UniqueIdAnnotationToolTests(SecurityTest):
     layer = UidEventZCMLLayer
 
     def _getTargetClass(self):
-        from Products.CMFUid.UniqueIdAnnotationTool \
-                import UniqueIdAnnotationTool
+        from Products.CMFUid.UniqueIdAnnotationTool import \
+            UniqueIdAnnotationTool
 
         return UniqueIdAnnotationTool
 
@@ -80,6 +80,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
     def setUp(self):
         from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
+
         from Products.CMFCore.utils import registerToolInterface
 
         SecurityTest.setUp(self)
@@ -117,8 +118,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
     def test_interfaces(self):
         from Products.CMFUid.interfaces import IUniqueIdAnnotation
         from Products.CMFUid.interfaces import IUniqueIdAnnotationManagement
-        from Products.CMFUid.UniqueIdAnnotationTool \
-            import UniqueIdAnnotation
+        from Products.CMFUid.UniqueIdAnnotationTool import UniqueIdAnnotation
 
         verifyClass(IUniqueIdAnnotationManagement, self._getTargetClass())
         verifyClass(IUniqueIdAnnotation, UniqueIdAnnotation)
