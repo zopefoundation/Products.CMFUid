@@ -11,6 +11,7 @@ env:
 matrix:
      include:
          - python: "3.8"
+           name: lint
            env: TOXENV=lint
            after_success:
 install:
