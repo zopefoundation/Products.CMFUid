@@ -1,10 +1,12 @@
 Products.CMFUid Changelog
 =========================
 
-3.0.3 (unreleased)
+3.1.0 (unreleased)
 ------------------
 
 - Fixed deprecation warning for zope.component.interfaces.IObjectEvent.
+
+- Drop support for ``python setup.py test`` which is broken in Python 3.7+.
 
 
 3.0.2 (2020-06-24)
