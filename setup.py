@@ -57,7 +57,7 @@ setup(
     extras_require={
         'test': [
             'zope.testing >= 3.7.0',
-        ]
+        ],
     },
     entry_points="""
     [zope2.initialize]
