@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-3.0.3 (unreleased)
+3.1.0 (unreleased)
 ------------------
 
 - Fixed deprecation warning for zope.component.interfaces.IObjectEvent.
