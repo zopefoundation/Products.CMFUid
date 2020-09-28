@@ -48,24 +48,19 @@ setup(
     include_package_data=True,
     namespace_packages=['Products'],
     zip_safe=False,
-    setup_requires=[
-        'eggtestinfo',
-    ],
     install_requires=[
         'Products.CMFCore >= 2.4.0dev',
         'Products.ZCatalog >= 4.1.1',
         'Zope',
         'setuptools',
     ],
-    tests_require=[
-        'zope.testing >= 3.7.0',
-    ],
-    test_loader='zope.testing.testrunner.eggsupport:SkipLayers',
-    test_suite='Products.%s.tests' % NAME,
+    extras_require={
+        'test': [
+            'zope.testing >= 3.7.0',
+        ]
+    },
     entry_points="""
     [zope2.initialize]
     Products.%s = Products.%s:initialize
-    [distutils.commands]
-    ftest = zope.testing.testrunner.eggsupport:ftest
     """ % (NAME, NAME),
 )
