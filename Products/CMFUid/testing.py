@@ -23,8 +23,8 @@ class UidEventZCMLLayer(ZopeLite):
 
     @classmethod
     def testSetUp(cls):
-        import Products
         import OFS
+        import Products
 
         zcml.load_config('meta.zcml', Products.Five)
         zcml.load_config('event.zcml', OFS)

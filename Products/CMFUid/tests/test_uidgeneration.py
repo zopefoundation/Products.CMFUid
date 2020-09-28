@@ -24,8 +24,7 @@ from Products.CMFCore.tests.base.testcase import SecurityTest
 class UniqueIdGeneratorToolTests(SecurityTest):
 
     def _getTargetClass(self):
-        from Products.CMFUid.UniqueIdGeneratorTool \
-                import UniqueIdGeneratorTool
+        from Products.CMFUid.UniqueIdGeneratorTool import UniqueIdGeneratorTool
 
         return UniqueIdGeneratorTool
 
