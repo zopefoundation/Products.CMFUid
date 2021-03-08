@@ -4,7 +4,7 @@ Products.CMFUid Changelog
 3.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- change package structure to move package code into a ``src`` subfolder
 
 
 3.1.0 (2020-09-28)

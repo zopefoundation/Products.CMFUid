@@ -3,14 +3,8 @@ include *.rst
 include buildout.cfg
 include tox.ini
 
-exclude MANIFEST.in
-
-include .gitignore
-exclude .gitignore
-
-include .travis.yml
-exclude .travis.yml
-
-recursive-include Products *
-
-global-exclude *.pyc
+recursive-include src *.gif
+recursive-include src *.pt
+recursive-include src *.py
+recursive-include src *.xml
+recursive-include src *.zcml
