@@ -1,13 +1,26 @@
-=================
- Products.CMFUid
-=================
+.. image:: https://github.com/zopefoundation/Products.CMFUid/actions/workflows/tests.yml/badge.svg
+        :target: https://github.com/zopefoundation/Products.CMFUid/actions/workflows/tests.yml
+
+.. image:: https://coveralls.io/repos/github/zopefoundation/Products.CMFUid/badge.svg
+        :target: https://coveralls.io/github/zopefoundation/Products.CMFUid
+
+.. image:: https://img.shields.io/pypi/v/Products.CMFUid.svg
+        :target: https://pypi.org/project/Products.CMFUid/
+        :alt: Current version on PyPI
+
+.. image:: https://img.shields.io/pypi/pyversions/Products.CMFUid.svg
+        :target: https://pypi.org/project/Products.CMFUid/
+        :alt: Supported Python versions
+
+Products.CMFUid
+===============
 
 .. contents::
 
 CMFUid introduces a simple unique id implementation.
 
 Implementation
-==============
+--------------
 
 The supplied tools attach the unique ids to the objects. The objects
 do not have to be aware of unique ids.
@@ -17,7 +30,7 @@ object of a given unique id. The interfaces do not imply the use
 of the catalog (except the IUniqueIdBrainQuery).
 
 Which Tool does What?
-=====================
+---------------------
 
 The 'portal_uidgenerator' tools responsibility is to generate 
 unique ids. The 'portal_uidannotation' tool is responsible to 
@@ -29,13 +42,13 @@ This design was chosen to allow users replacing only parts of
 the functionality without having to understand the whole thing.
 
 Unique Id API
-=============
+-------------
 
 'portal_uidhandler' implementing 'IUniqueIdHandler' is the main 
 API for playing with unique ids.
     
 Usage
-=====
+-----
 
 'portal_uidhandler' fully implements IUniqueIdHandler (IUniqueIdSet
 for registering/unregistering unique ids, IUniqueIdQuery for queries
@@ -60,7 +73,7 @@ CMFUid is not installed.
 
 
 Update 2007-03-30
-=================
+-----------------
 
 The annotation code has been updated to use events for assigning/removing 
 uids.  The settings for this live in the portal_uidannotation tool.

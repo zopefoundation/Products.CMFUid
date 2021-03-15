@@ -1,8 +1,10 @@
 Products.CMFUid Changelog
 =========================
 
-3.1.1 (unreleased)
+3.2.0 (unreleased)
 ------------------
+
+- Add support for Python 3.9
 
 - change package structure to move package code into a ``src`` subfolder
 
