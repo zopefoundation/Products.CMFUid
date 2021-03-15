@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-3.2.0 (unreleased)
+3.2.0 (2021-03-15)
 ------------------
 
 - Add support for Python 3.9
