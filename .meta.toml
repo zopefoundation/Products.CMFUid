@@ -2,7 +2,7 @@
 # https://github.com/zopefoundation/meta/tree/master/config/zope-product
 [meta]
 template = "zope-product"
-commit-id = "5160fefd5278ff7780bff6efd7efbecc47d6741a"
+commit-id = "d86cf2ed926cfc9661d7f6f7fb989bc77eb5db4e"
 
 [python]
 with-appveyor = false
@@ -19,7 +19,7 @@ known_zope = "OFS, Products"
 use-flake8 = true
 
 [coverage]
-fail-under = 85
+fail-under = 97
 
 [manifest]
 additional-rules = [
