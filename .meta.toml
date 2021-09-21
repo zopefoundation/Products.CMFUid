@@ -2,14 +2,14 @@
 # https://github.com/zopefoundation/meta/tree/master/config/zope-product
 [meta]
 template = "zope-product"
-commit-id = "d86cf2ed926cfc9661d7f6f7fb989bc77eb5db4e"
+commit-id = "5b60e8235223c5c73427d4cdf66be5fb2cce3cea"
 
 [python]
-with-appveyor = false
 with-pypy = false
 with-legacy-python = true
-with-docs = false
 with-sphinx-doctests = false
+with-windows = false
+with-future-python = false
 
 [isort]
 known_first_party = "Products.CMFCore"
@@ -25,5 +25,7 @@ fail-under = 97
 additional-rules = [
     "include buildout4.cfg",
     "recursive-include src *.gif",
+    "recursive-include src *.pt",
     "recursive-include src *.xml",
+    "recursive-include src *.zcml",
     ]
