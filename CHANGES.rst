@@ -1,16 +1,18 @@
 Products.CMFUid Changelog
 =========================
 
-3.2.1 (unreleased)
-------------------
+3.3 (unreleased)
+----------------
+
+- Add support for Python 3.10.
 
 
 3.2.0 (2021-03-15)
 ------------------
 
-- Add support for Python 3.9
+- Add support for Python 3.9.
 
-- change package structure to move package code into a ``src`` subfolder
+- Change package structure to move package code into a ``src`` subfolder.
 
 
 3.1.0 (2020-09-28)
