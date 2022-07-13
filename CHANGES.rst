@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-3.3 (unreleased)
+3.3 (2022-07-13)
 ----------------
 
 - Add support for Python 3.10.
