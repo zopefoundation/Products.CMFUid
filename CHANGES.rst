@@ -1,6 +1,12 @@
 Products.CMFUid Changelog
 =========================
 
+3.4 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 3.3 (2022-07-13)
 ----------------
 
