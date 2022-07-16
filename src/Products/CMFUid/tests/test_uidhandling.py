@@ -291,8 +291,11 @@ class UniqueIdHandlerTests(SecurityTest):
         catalog = self.ctool
         dummy = self.app.dummy
 
-        # mock the portal root, which has empty indexing attributes
-        dummy.reindexObject = lambda: None
+        # An object like the portal root can override
+        # reindexObject to suppress indexing.
+        def reindexObject(idxs=[]):
+            pass
+        dummy.reindexObject = reindexObject
 
         uid = handler.register(dummy)
         brains = catalog(cmf_uid=uid)
