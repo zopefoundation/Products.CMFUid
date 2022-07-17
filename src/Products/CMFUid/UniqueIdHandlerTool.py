@@ -70,8 +70,11 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
     security = ClassSecurityInfo()
 
     def _reindexObject(self, obj):
-        ctool = getToolByName(self, 'portal_catalog')
-        ctool.reindexObject(obj, idxs=[self.UID_ATTRIBUTE_NAME])
+        try:
+            obj.reindexObject(idxs=[self.UID_ATTRIBUTE_NAME])
+        except AttributeError:
+            ctool = getToolByName(self, 'portal_catalog')
+            ctool.reindexObject(obj, idxs=[self.UID_ATTRIBUTE_NAME])
 
     def _setUid(self, obj, uid):
         """Attaches a unique id to the object and does reindexing.
@@ -82,10 +85,7 @@ class UniqueIdHandlerTool(UniqueObject, SimpleItem):
         annotation.setUid(uid)
 
         # reindex the object
-        try:
-            obj.reindexObject()
-        except AttributeError:
-            self._reindexObject(obj)
+        self._reindexObject(obj)
 
     security.declarePublic('register')
 

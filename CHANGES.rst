@@ -4,7 +4,8 @@ Products.CMFUid Changelog
 3.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- When an object is reindexed after its UID is set,
+  only reindex the ``cmf_uid`` index rather than all indexes.
 
 
 3.3 (2022-07-13)
