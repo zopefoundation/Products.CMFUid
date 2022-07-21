@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-3.4 (unreleased)
+3.4 (2022-07-21)
 ----------------
 
 - When an object is reindexed after its UID is set,
