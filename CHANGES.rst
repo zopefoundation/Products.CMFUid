@@ -1,9 +1,12 @@
 Products.CMFUid Changelog
 =========================
 
-3.5 (unreleased)
+3.5 (2022-12-16)
 ----------------
 
+- Fix insidious buildout configuration bug for tests against Zope 4.
+
+- Add support for Python 3.11.
 
 
 3.4 (2022-07-21)
