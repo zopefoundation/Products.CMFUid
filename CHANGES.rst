@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-3.6 (unreleased)
+4.0 (unreleased)
 ----------------
 
 
