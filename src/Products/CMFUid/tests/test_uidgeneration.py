@@ -65,5 +65,6 @@ class UniqueIdGeneratorToolTests(SecurityTest):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(UniqueIdGeneratorToolTests),
+        unittest.defaultTestLoader.loadTestsFromTestCase(
+            UniqueIdGeneratorToolTests),
         ))

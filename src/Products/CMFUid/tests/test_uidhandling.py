@@ -44,7 +44,7 @@ class DummyContent(DummyContent):
     Think File and Image.
     """
     def __str__(self):
-        return u'M\xe4dchen'
+        return 'M\xe4dchen'
 
 
 class UniqueIdHandlerTests(SecurityTest):
