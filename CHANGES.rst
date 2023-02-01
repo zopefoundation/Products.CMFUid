@@ -1,8 +1,10 @@
 Products.CMFUid Changelog
 =========================
 
-3.6 (unreleased)
+4.0 (unreleased)
 ----------------
+
+- Drop support for Python 2.7, 3.5, 3.6.
 
 
 3.5 (2022-12-16)

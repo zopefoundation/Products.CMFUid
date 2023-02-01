@@ -283,5 +283,6 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(UniqueIdAnnotationToolTests),
+        unittest.defaultTestLoader.loadTestsFromTestCase(
+            UniqueIdAnnotationToolTests),
         ))
