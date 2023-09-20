@@ -75,7 +75,7 @@ def handleUidAnnotationEvent(ob, event):
         if event.newParent is not None:
             anno_tool = queryUtility(IUniqueIdAnnotationManagement)
             uidtool = getToolByName(ob, 'portal_uidhandler', None)
-            if anno_tool is not None:
+            if anno_tool is not None and uidtool is not None:
                 remove_on_add = anno_tool.getProperty('remove_on_add', False)
                 remove_on_clone = anno_tool.getProperty('remove_on_clone',
                                                         False)
