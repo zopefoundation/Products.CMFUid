@@ -4,6 +4,7 @@ Products.CMFUid Changelog
 4.1 (unreleased)
 ----------------
 
+- modified the code to check if both 'anno_tool' and 'uidtool' exist before using them. This change ensures that the code won't run unless both tools are available, preventing the 'NoneType' error.
 
 4.0 (2023-02-01)
 ----------------
