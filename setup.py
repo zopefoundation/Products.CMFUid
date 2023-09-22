@@ -47,6 +47,7 @@ setup(
     include_package_data=True,
     namespace_packages=['Products'],
     zip_safe=False,
+    python_requires='>=3.7',
     install_requires=[
         'Products.CMFCore >= 2.4.0dev',
         'Products.ZCatalog >= 4.1.1',
