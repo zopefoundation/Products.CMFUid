@@ -4,11 +4,13 @@ Products.CMFUid Changelog
 4.2 (unreleased)
 ----------------
 
+- Fix ``DeprecationWarning``: import ``IObjectAddedEvent`` from ``zope.lifecycleevent``.
+
 
 4.1 (2023-10-02)
 ----------------
 
-- Modified the code of ``handleUidAnnotationEvent`` to check if both the 
+- Modified the code of ``handleUidAnnotationEvent`` to check if both the
   annotation tool and the UID tool exist before using them. This change
   ensures that the code won't run unless both tools are available.
 

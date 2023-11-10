@@ -23,8 +23,8 @@ from OFS.PropertyManager import PropertyManager
 from OFS.SimpleItem import SimpleItem
 from Persistence import Persistent
 from zope.component import queryUtility
-from zope.container.interfaces import IObjectAddedEvent
 from zope.interface import implementer
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
