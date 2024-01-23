@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-4.2 (unreleased)
+4.2 (2024-01-23)
 ----------------
 
 - Fix ``DeprecationWarning``: import ``IObjectAddedEvent`` from ``zope.lifecycleevent``.
