@@ -1,10 +1,12 @@
 Products.CMFUid Changelog
 =========================
 
-4.3 (unreleased)
+5.0 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Drop support for Python 3.7.
+
+- Add support for Python 3.12.
 
 
 4.2 (2024-01-23)

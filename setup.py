@@ -19,7 +19,7 @@ README = _boundary.join([
 
 setup(
     name='Products.%s' % NAME,
-    version='4.3.dev0',
+    version='5.0.dev0',
     description='Uid product for the Zope Content Management Framework',
     long_description=README,
     classifiers=[
@@ -29,11 +29,11 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Zope Public License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
@@ -47,7 +47,7 @@ setup(
     include_package_data=True,
     namespace_packages=['Products'],
     zip_safe=False,
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     install_requires=[
         'Products.CMFCore >= 2.4.0dev',
         'Products.ZCatalog >= 4.1.1',
