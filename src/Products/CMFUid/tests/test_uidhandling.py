@@ -43,6 +43,7 @@ class DummyContent(DummyContent):
 
     Think File and Image.
     """
+
     def __str__(self):
         return 'M\xe4dchen'
 
