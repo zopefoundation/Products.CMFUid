@@ -57,9 +57,9 @@ class UniqueIdGeneratorToolTests(SecurityTest):
         generator = self._makeOne()
         uid1 = generator()
         generator._uid_counter = Length(uid1)
-        self.assertTrue(isinstance(generator._uid_counter, Length))
+        self.assertIsInstance(generator._uid_counter, Length)
         uid2 = generator()
-        self.assertTrue(isinstance(generator._uid_counter, int))
+        self.assertIsInstance(generator._uid_counter, int)
         self.assertNotEqual(uid1, uid2)
 
 
@@ -67,4 +67,4 @@ def test_suite():
     return unittest.TestSuite((
         unittest.defaultTestLoader.loadTestsFromTestCase(
             UniqueIdGeneratorToolTests),
-        ))
+    ))

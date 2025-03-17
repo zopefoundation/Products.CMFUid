@@ -152,7 +152,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
 
         annotation = getattr(dummy, UID_ATTRNAME, None)
 
-        self.assertTrue(annotation is not None)
+        self.assertIsNotNone(annotation)
 
     def test_simulateItemAddRemovingUid(self):
         # an annotated object is set in place
@@ -169,7 +169,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         self.uidannotation.assign_on_add = True
         self.app._setObject('dummycontent', dummy)
 
-        self.assertFalse(getattr(dummy, UID_ATTRNAME)() == annotation())
+        self.assertNotEqual(getattr(dummy, UID_ATTRNAME)(), annotation())
 
     def test_simulateItemAddDoesNotTouchUid(self):
         # an annotated object is set in place
@@ -259,7 +259,7 @@ class UniqueIdAnnotationToolTests(SecurityTest):
         self.app.folder1.manage_pasteObjects(cookie)
         new_annotation = getattr(self.app.folder1.dummy, UID_ATTRNAME)
 
-        self.assertFalse(annotation() == new_annotation())
+        self.assertNotEqual(annotation(), new_annotation())
 
     def test_simulateNestedFolderCloneRemovingUid1(self):
         self._initPolicyAndUser()  # allow copy/paste operations
@@ -285,4 +285,4 @@ def test_suite():
     return unittest.TestSuite((
         unittest.defaultTestLoader.loadTestsFromTestCase(
             UniqueIdAnnotationToolTests),
-        ))
+    ))
