@@ -18,7 +18,7 @@ README = _boundary.join([
 
 setup(
     name='Products.%s' % NAME,
-    version='5.0.dev0',
+    version='5.0',
     description='Uid product for the Zope Content Management Framework',
     long_description=README,
     classifiers=[
@@ -52,6 +52,7 @@ setup(
             'zope.testing >= 3.7.0',
         ],
     },
+    include_package_data=True,
     entry_points="""
     [zope2.initialize]
     Products.{} = Products.{}:initialize

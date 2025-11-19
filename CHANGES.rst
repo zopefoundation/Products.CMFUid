@@ -1,7 +1,7 @@
 Products.CMFUid Changelog
 =========================
 
-5.0 (unreleased)
+5.0 (2025-11-19)
 ----------------
 
 - Switch to PEP 420 native namespace.
