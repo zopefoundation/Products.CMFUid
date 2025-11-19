@@ -46,7 +46,6 @@ setup(
         'Products.CMFCore >= 2.4.0dev',
         'Products.ZCatalog >= 4.1.1',
         'Zope',
-        'setuptools',
     ],
     extras_require={
         'test': [
